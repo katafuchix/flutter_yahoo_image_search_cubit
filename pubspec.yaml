@@ -61,6 +61,8 @@ dependencies:
   bloc_test: ^9.1.0  # Cubitのテスト用
   mocktail: ^1.0.0   # モック作成用
   equatable: ^2.0.5
+  image_gallery_saver: ^2.0.3
+  http: ^1.0.0 # 最新バージョンを確認
 
 dev_dependencies:
   flutter_test:

@@ -4,41 +4,43 @@ import '../../model/image_result.dart';
 part 'yahoo_image_search_state.freezed.dart';
 
 // flutter pub run build_runner build --delete-conflicting-outputs
-
-// 共通で持ち回るデータだけをまとめたクラス
-@freezed
-class SearchContext with _$SearchContext {
-  const factory SearchContext({
-    required String word,
-    @Default(false) bool isSafeSearch,
-  }) = _SearchContext;
-}
-
 // Union形式（Sealed Class）
+
 @freezed
 class YahooImageSearchState with _$YahooImageSearchState {
-  // すべての factory が SearchContext を一つだけ持つ
-  // 初期状態
-  const factory YahooImageSearchState.initial(SearchContext context) =
-      YahooImageSearchInitial;
-
-  // 読み込み中
-  const factory YahooImageSearchState.loading(SearchContext context) =
-      YahooImageSearchLoading;
-
-  // 成功（結果データを持つ）
-  const factory YahooImageSearchState.success({
-    required SearchContext context,
-    required List<ImageResult> results,
-  }) = YahooImageSearchSuccess;
-
-  // 失敗（エラーメッセージを持つ）
-  const factory YahooImageSearchState.error({
-    required SearchContext context,
-    required String message,
-  }) = YahooImageSearchError;
+  const factory YahooImageSearchState({
+    @Default(ScreenState.initial('')) ScreenState screen,
+    @Default(DialogState.idle()) DialogState dialog,
+  }) = _YahooImageSearchState;
 }
 
+@freezed
+sealed class ScreenState with _$ScreenState {
+  const factory ScreenState.initial(String word) = ScreenInitial;
+
+  const factory ScreenState.loading(String word) = ScreenLoading;
+
+  const factory ScreenState.success({
+    required List<ImageResult> results,
+    required String word,
+  }) = ScreenSuccess;
+
+  const factory ScreenState.error({
+    required String message,
+    required String word,
+  }) = ScreenError;
+}
+
+@freezed
+sealed class DialogState with _$DialogState {
+  const factory DialogState.idle() = DialogIdle;
+
+  const factory DialogState.loading() = DialogLoading;
+
+  const factory DialogState.success(String message) = DialogSuccess;
+
+  const factory DialogState.error(String message) = DialogError;
+}
 /*
 @freezed
 class YahooImageSearchState with _$YahooImageSearchState {

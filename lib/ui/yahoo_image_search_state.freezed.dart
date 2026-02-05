@@ -15,197 +15,9 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$SearchContext {
-  String get word => throw _privateConstructorUsedError;
-  bool get isSafeSearch => throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $SearchContextCopyWith<SearchContext> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $SearchContextCopyWith<$Res> {
-  factory $SearchContextCopyWith(
-          SearchContext value, $Res Function(SearchContext) then) =
-      _$SearchContextCopyWithImpl<$Res, SearchContext>;
-  @useResult
-  $Res call({String word, bool isSafeSearch});
-}
-
-/// @nodoc
-class _$SearchContextCopyWithImpl<$Res, $Val extends SearchContext>
-    implements $SearchContextCopyWith<$Res> {
-  _$SearchContextCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? word = null,
-    Object? isSafeSearch = null,
-  }) {
-    return _then(_value.copyWith(
-      word: null == word
-          ? _value.word
-          : word // ignore: cast_nullable_to_non_nullable
-              as String,
-      isSafeSearch: null == isSafeSearch
-          ? _value.isSafeSearch
-          : isSafeSearch // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$SearchContextImplCopyWith<$Res>
-    implements $SearchContextCopyWith<$Res> {
-  factory _$$SearchContextImplCopyWith(
-          _$SearchContextImpl value, $Res Function(_$SearchContextImpl) then) =
-      __$$SearchContextImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({String word, bool isSafeSearch});
-}
-
-/// @nodoc
-class __$$SearchContextImplCopyWithImpl<$Res>
-    extends _$SearchContextCopyWithImpl<$Res, _$SearchContextImpl>
-    implements _$$SearchContextImplCopyWith<$Res> {
-  __$$SearchContextImplCopyWithImpl(
-      _$SearchContextImpl _value, $Res Function(_$SearchContextImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? word = null,
-    Object? isSafeSearch = null,
-  }) {
-    return _then(_$SearchContextImpl(
-      word: null == word
-          ? _value.word
-          : word // ignore: cast_nullable_to_non_nullable
-              as String,
-      isSafeSearch: null == isSafeSearch
-          ? _value.isSafeSearch
-          : isSafeSearch // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$SearchContextImpl implements _SearchContext {
-  const _$SearchContextImpl({required this.word, this.isSafeSearch = false});
-
-  @override
-  final String word;
-  @override
-  @JsonKey()
-  final bool isSafeSearch;
-
-  @override
-  String toString() {
-    return 'SearchContext(word: $word, isSafeSearch: $isSafeSearch)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$SearchContextImpl &&
-            (identical(other.word, word) || other.word == word) &&
-            (identical(other.isSafeSearch, isSafeSearch) ||
-                other.isSafeSearch == isSafeSearch));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, word, isSafeSearch);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$SearchContextImplCopyWith<_$SearchContextImpl> get copyWith =>
-      __$$SearchContextImplCopyWithImpl<_$SearchContextImpl>(this, _$identity);
-}
-
-abstract class _SearchContext implements SearchContext {
-  const factory _SearchContext(
-      {required final String word,
-      final bool isSafeSearch}) = _$SearchContextImpl;
-
-  @override
-  String get word;
-  @override
-  bool get isSafeSearch;
-  @override
-  @JsonKey(ignore: true)
-  _$$SearchContextImplCopyWith<_$SearchContextImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
 mixin _$YahooImageSearchState {
-  SearchContext get context => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(SearchContext context) initial,
-    required TResult Function(SearchContext context) loading,
-    required TResult Function(List<ImageResult> results, SearchContext context)
-        success,
-    required TResult Function(String message, SearchContext context) error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(SearchContext context)? initial,
-    TResult? Function(SearchContext context)? loading,
-    TResult? Function(List<ImageResult> results, SearchContext context)?
-        success,
-    TResult? Function(String message, SearchContext context)? error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(SearchContext context)? initial,
-    TResult Function(SearchContext context)? loading,
-    TResult Function(List<ImageResult> results, SearchContext context)? success,
-    TResult Function(String message, SearchContext context)? error,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(YahooImageSearchInitial value) initial,
-    required TResult Function(YahooImageSearchLoading value) loading,
-    required TResult Function(YahooImageSearchSuccess value) success,
-    required TResult Function(YahooImageSearchError value) error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(YahooImageSearchInitial value)? initial,
-    TResult? Function(YahooImageSearchLoading value)? loading,
-    TResult? Function(YahooImageSearchSuccess value)? success,
-    TResult? Function(YahooImageSearchError value)? error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(YahooImageSearchInitial value)? initial,
-    TResult Function(YahooImageSearchLoading value)? loading,
-    TResult Function(YahooImageSearchSuccess value)? success,
-    TResult Function(YahooImageSearchError value)? error,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+  ScreenState get screen => throw _privateConstructorUsedError;
+  DialogState get dialog => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $YahooImageSearchStateCopyWith<YahooImageSearchState> get copyWith =>
@@ -218,9 +30,10 @@ abstract class $YahooImageSearchStateCopyWith<$Res> {
           $Res Function(YahooImageSearchState) then) =
       _$YahooImageSearchStateCopyWithImpl<$Res, YahooImageSearchState>;
   @useResult
-  $Res call({SearchContext context});
+  $Res call({ScreenState screen, DialogState dialog});
 
-  $SearchContextCopyWith<$Res> get context;
+  $ScreenStateCopyWith<$Res> get screen;
+  $DialogStateCopyWith<$Res> get dialog;
 }
 
 /// @nodoc
@@ -237,130 +50,325 @@ class _$YahooImageSearchStateCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? context = null,
+    Object? screen = null,
+    Object? dialog = null,
   }) {
     return _then(_value.copyWith(
-      context: null == context
-          ? _value.context
-          : context // ignore: cast_nullable_to_non_nullable
-              as SearchContext,
+      screen: null == screen
+          ? _value.screen
+          : screen // ignore: cast_nullable_to_non_nullable
+              as ScreenState,
+      dialog: null == dialog
+          ? _value.dialog
+          : dialog // ignore: cast_nullable_to_non_nullable
+              as DialogState,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $SearchContextCopyWith<$Res> get context {
-    return $SearchContextCopyWith<$Res>(_value.context, (value) {
-      return _then(_value.copyWith(context: value) as $Val);
+  $ScreenStateCopyWith<$Res> get screen {
+    return $ScreenStateCopyWith<$Res>(_value.screen, (value) {
+      return _then(_value.copyWith(screen: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $DialogStateCopyWith<$Res> get dialog {
+    return $DialogStateCopyWith<$Res>(_value.dialog, (value) {
+      return _then(_value.copyWith(dialog: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$$YahooImageSearchInitialImplCopyWith<$Res>
+abstract class _$$YahooImageSearchStateImplCopyWith<$Res>
     implements $YahooImageSearchStateCopyWith<$Res> {
-  factory _$$YahooImageSearchInitialImplCopyWith(
-          _$YahooImageSearchInitialImpl value,
-          $Res Function(_$YahooImageSearchInitialImpl) then) =
-      __$$YahooImageSearchInitialImplCopyWithImpl<$Res>;
+  factory _$$YahooImageSearchStateImplCopyWith(
+          _$YahooImageSearchStateImpl value,
+          $Res Function(_$YahooImageSearchStateImpl) then) =
+      __$$YahooImageSearchStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({SearchContext context});
+  $Res call({ScreenState screen, DialogState dialog});
 
   @override
-  $SearchContextCopyWith<$Res> get context;
+  $ScreenStateCopyWith<$Res> get screen;
+  @override
+  $DialogStateCopyWith<$Res> get dialog;
 }
 
 /// @nodoc
-class __$$YahooImageSearchInitialImplCopyWithImpl<$Res>
+class __$$YahooImageSearchStateImplCopyWithImpl<$Res>
     extends _$YahooImageSearchStateCopyWithImpl<$Res,
-        _$YahooImageSearchInitialImpl>
-    implements _$$YahooImageSearchInitialImplCopyWith<$Res> {
-  __$$YahooImageSearchInitialImplCopyWithImpl(
-      _$YahooImageSearchInitialImpl _value,
-      $Res Function(_$YahooImageSearchInitialImpl) _then)
+        _$YahooImageSearchStateImpl>
+    implements _$$YahooImageSearchStateImplCopyWith<$Res> {
+  __$$YahooImageSearchStateImplCopyWithImpl(_$YahooImageSearchStateImpl _value,
+      $Res Function(_$YahooImageSearchStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? context = null,
+    Object? screen = null,
+    Object? dialog = null,
   }) {
-    return _then(_$YahooImageSearchInitialImpl(
-      null == context
-          ? _value.context
-          : context // ignore: cast_nullable_to_non_nullable
-              as SearchContext,
+    return _then(_$YahooImageSearchStateImpl(
+      screen: null == screen
+          ? _value.screen
+          : screen // ignore: cast_nullable_to_non_nullable
+              as ScreenState,
+      dialog: null == dialog
+          ? _value.dialog
+          : dialog // ignore: cast_nullable_to_non_nullable
+              as DialogState,
     ));
   }
 }
 
 /// @nodoc
 
-class _$YahooImageSearchInitialImpl implements YahooImageSearchInitial {
-  const _$YahooImageSearchInitialImpl(this.context);
+class _$YahooImageSearchStateImpl implements _YahooImageSearchState {
+  const _$YahooImageSearchStateImpl(
+      {this.screen = const ScreenState.initial(''),
+      this.dialog = const DialogState.idle()});
 
   @override
-  final SearchContext context;
+  @JsonKey()
+  final ScreenState screen;
+  @override
+  @JsonKey()
+  final DialogState dialog;
 
   @override
   String toString() {
-    return 'YahooImageSearchState.initial(context: $context)';
+    return 'YahooImageSearchState(screen: $screen, dialog: $dialog)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$YahooImageSearchInitialImpl &&
-            (identical(other.context, context) || other.context == context));
+            other is _$YahooImageSearchStateImpl &&
+            (identical(other.screen, screen) || other.screen == screen) &&
+            (identical(other.dialog, dialog) || other.dialog == dialog));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, context);
+  int get hashCode => Object.hash(runtimeType, screen, dialog);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$YahooImageSearchInitialImplCopyWith<_$YahooImageSearchInitialImpl>
-      get copyWith => __$$YahooImageSearchInitialImplCopyWithImpl<
-          _$YahooImageSearchInitialImpl>(this, _$identity);
+  _$$YahooImageSearchStateImplCopyWith<_$YahooImageSearchStateImpl>
+      get copyWith => __$$YahooImageSearchStateImplCopyWithImpl<
+          _$YahooImageSearchStateImpl>(this, _$identity);
+}
+
+abstract class _YahooImageSearchState implements YahooImageSearchState {
+  const factory _YahooImageSearchState(
+      {final ScreenState screen,
+      final DialogState dialog}) = _$YahooImageSearchStateImpl;
+
+  @override
+  ScreenState get screen;
+  @override
+  DialogState get dialog;
+  @override
+  @JsonKey(ignore: true)
+  _$$YahooImageSearchStateImplCopyWith<_$YahooImageSearchStateImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$ScreenState {
+  String get word => throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String word) initial,
+    required TResult Function(String word) loading,
+    required TResult Function(List<ImageResult> results, String word) success,
+    required TResult Function(String message, String word) error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String word)? initial,
+    TResult? Function(String word)? loading,
+    TResult? Function(List<ImageResult> results, String word)? success,
+    TResult? Function(String message, String word)? error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String word)? initial,
+    TResult Function(String word)? loading,
+    TResult Function(List<ImageResult> results, String word)? success,
+    TResult Function(String message, String word)? error,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ScreenInitial value) initial,
+    required TResult Function(ScreenLoading value) loading,
+    required TResult Function(ScreenSuccess value) success,
+    required TResult Function(ScreenError value) error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ScreenInitial value)? initial,
+    TResult? Function(ScreenLoading value)? loading,
+    TResult? Function(ScreenSuccess value)? success,
+    TResult? Function(ScreenError value)? error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ScreenInitial value)? initial,
+    TResult Function(ScreenLoading value)? loading,
+    TResult Function(ScreenSuccess value)? success,
+    TResult Function(ScreenError value)? error,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $ScreenStateCopyWith<ScreenState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ScreenStateCopyWith<$Res> {
+  factory $ScreenStateCopyWith(
+          ScreenState value, $Res Function(ScreenState) then) =
+      _$ScreenStateCopyWithImpl<$Res, ScreenState>;
+  @useResult
+  $Res call({String word});
+}
+
+/// @nodoc
+class _$ScreenStateCopyWithImpl<$Res, $Val extends ScreenState>
+    implements $ScreenStateCopyWith<$Res> {
+  _$ScreenStateCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? word = null,
+  }) {
+    return _then(_value.copyWith(
+      word: null == word
+          ? _value.word
+          : word // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$ScreenInitialImplCopyWith<$Res>
+    implements $ScreenStateCopyWith<$Res> {
+  factory _$$ScreenInitialImplCopyWith(
+          _$ScreenInitialImpl value, $Res Function(_$ScreenInitialImpl) then) =
+      __$$ScreenInitialImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String word});
+}
+
+/// @nodoc
+class __$$ScreenInitialImplCopyWithImpl<$Res>
+    extends _$ScreenStateCopyWithImpl<$Res, _$ScreenInitialImpl>
+    implements _$$ScreenInitialImplCopyWith<$Res> {
+  __$$ScreenInitialImplCopyWithImpl(
+      _$ScreenInitialImpl _value, $Res Function(_$ScreenInitialImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? word = null,
+  }) {
+    return _then(_$ScreenInitialImpl(
+      null == word
+          ? _value.word
+          : word // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ScreenInitialImpl implements ScreenInitial {
+  const _$ScreenInitialImpl(this.word);
+
+  @override
+  final String word;
+
+  @override
+  String toString() {
+    return 'ScreenState.initial(word: $word)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ScreenInitialImpl &&
+            (identical(other.word, word) || other.word == word));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, word);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ScreenInitialImplCopyWith<_$ScreenInitialImpl> get copyWith =>
+      __$$ScreenInitialImplCopyWithImpl<_$ScreenInitialImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(SearchContext context) initial,
-    required TResult Function(SearchContext context) loading,
-    required TResult Function(List<ImageResult> results, SearchContext context)
-        success,
-    required TResult Function(String message, SearchContext context) error,
+    required TResult Function(String word) initial,
+    required TResult Function(String word) loading,
+    required TResult Function(List<ImageResult> results, String word) success,
+    required TResult Function(String message, String word) error,
   }) {
-    return initial(context);
+    return initial(word);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(SearchContext context)? initial,
-    TResult? Function(SearchContext context)? loading,
-    TResult? Function(List<ImageResult> results, SearchContext context)?
-        success,
-    TResult? Function(String message, SearchContext context)? error,
+    TResult? Function(String word)? initial,
+    TResult? Function(String word)? loading,
+    TResult? Function(List<ImageResult> results, String word)? success,
+    TResult? Function(String message, String word)? error,
   }) {
-    return initial?.call(context);
+    return initial?.call(word);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(SearchContext context)? initial,
-    TResult Function(SearchContext context)? loading,
-    TResult Function(List<ImageResult> results, SearchContext context)? success,
-    TResult Function(String message, SearchContext context)? error,
+    TResult Function(String word)? initial,
+    TResult Function(String word)? loading,
+    TResult Function(List<ImageResult> results, String word)? success,
+    TResult Function(String message, String word)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial(context);
+      return initial(word);
     }
     return orElse();
   }
@@ -368,10 +376,10 @@ class _$YahooImageSearchInitialImpl implements YahooImageSearchInitial {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(YahooImageSearchInitial value) initial,
-    required TResult Function(YahooImageSearchLoading value) loading,
-    required TResult Function(YahooImageSearchSuccess value) success,
-    required TResult Function(YahooImageSearchError value) error,
+    required TResult Function(ScreenInitial value) initial,
+    required TResult Function(ScreenLoading value) loading,
+    required TResult Function(ScreenSuccess value) success,
+    required TResult Function(ScreenError value) error,
   }) {
     return initial(this);
   }
@@ -379,10 +387,10 @@ class _$YahooImageSearchInitialImpl implements YahooImageSearchInitial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(YahooImageSearchInitial value)? initial,
-    TResult? Function(YahooImageSearchLoading value)? loading,
-    TResult? Function(YahooImageSearchSuccess value)? success,
-    TResult? Function(YahooImageSearchError value)? error,
+    TResult? Function(ScreenInitial value)? initial,
+    TResult? Function(ScreenLoading value)? loading,
+    TResult? Function(ScreenSuccess value)? success,
+    TResult? Function(ScreenError value)? error,
   }) {
     return initial?.call(this);
   }
@@ -390,10 +398,10 @@ class _$YahooImageSearchInitialImpl implements YahooImageSearchInitial {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(YahooImageSearchInitial value)? initial,
-    TResult Function(YahooImageSearchLoading value)? loading,
-    TResult Function(YahooImageSearchSuccess value)? success,
-    TResult Function(YahooImageSearchError value)? error,
+    TResult Function(ScreenInitial value)? initial,
+    TResult Function(ScreenLoading value)? loading,
+    TResult Function(ScreenSuccess value)? success,
+    TResult Function(ScreenError value)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -403,123 +411,113 @@ class _$YahooImageSearchInitialImpl implements YahooImageSearchInitial {
   }
 }
 
-abstract class YahooImageSearchInitial implements YahooImageSearchState {
-  const factory YahooImageSearchInitial(final SearchContext context) =
-      _$YahooImageSearchInitialImpl;
+abstract class ScreenInitial implements ScreenState {
+  const factory ScreenInitial(final String word) = _$ScreenInitialImpl;
 
   @override
-  SearchContext get context;
+  String get word;
   @override
   @JsonKey(ignore: true)
-  _$$YahooImageSearchInitialImplCopyWith<_$YahooImageSearchInitialImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  _$$ScreenInitialImplCopyWith<_$ScreenInitialImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$YahooImageSearchLoadingImplCopyWith<$Res>
-    implements $YahooImageSearchStateCopyWith<$Res> {
-  factory _$$YahooImageSearchLoadingImplCopyWith(
-          _$YahooImageSearchLoadingImpl value,
-          $Res Function(_$YahooImageSearchLoadingImpl) then) =
-      __$$YahooImageSearchLoadingImplCopyWithImpl<$Res>;
+abstract class _$$ScreenLoadingImplCopyWith<$Res>
+    implements $ScreenStateCopyWith<$Res> {
+  factory _$$ScreenLoadingImplCopyWith(
+          _$ScreenLoadingImpl value, $Res Function(_$ScreenLoadingImpl) then) =
+      __$$ScreenLoadingImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({SearchContext context});
-
-  @override
-  $SearchContextCopyWith<$Res> get context;
+  $Res call({String word});
 }
 
 /// @nodoc
-class __$$YahooImageSearchLoadingImplCopyWithImpl<$Res>
-    extends _$YahooImageSearchStateCopyWithImpl<$Res,
-        _$YahooImageSearchLoadingImpl>
-    implements _$$YahooImageSearchLoadingImplCopyWith<$Res> {
-  __$$YahooImageSearchLoadingImplCopyWithImpl(
-      _$YahooImageSearchLoadingImpl _value,
-      $Res Function(_$YahooImageSearchLoadingImpl) _then)
+class __$$ScreenLoadingImplCopyWithImpl<$Res>
+    extends _$ScreenStateCopyWithImpl<$Res, _$ScreenLoadingImpl>
+    implements _$$ScreenLoadingImplCopyWith<$Res> {
+  __$$ScreenLoadingImplCopyWithImpl(
+      _$ScreenLoadingImpl _value, $Res Function(_$ScreenLoadingImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? context = null,
+    Object? word = null,
   }) {
-    return _then(_$YahooImageSearchLoadingImpl(
-      null == context
-          ? _value.context
-          : context // ignore: cast_nullable_to_non_nullable
-              as SearchContext,
+    return _then(_$ScreenLoadingImpl(
+      null == word
+          ? _value.word
+          : word // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
 
-class _$YahooImageSearchLoadingImpl implements YahooImageSearchLoading {
-  const _$YahooImageSearchLoadingImpl(this.context);
+class _$ScreenLoadingImpl implements ScreenLoading {
+  const _$ScreenLoadingImpl(this.word);
 
   @override
-  final SearchContext context;
+  final String word;
 
   @override
   String toString() {
-    return 'YahooImageSearchState.loading(context: $context)';
+    return 'ScreenState.loading(word: $word)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$YahooImageSearchLoadingImpl &&
-            (identical(other.context, context) || other.context == context));
+            other is _$ScreenLoadingImpl &&
+            (identical(other.word, word) || other.word == word));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, context);
+  int get hashCode => Object.hash(runtimeType, word);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$YahooImageSearchLoadingImplCopyWith<_$YahooImageSearchLoadingImpl>
-      get copyWith => __$$YahooImageSearchLoadingImplCopyWithImpl<
-          _$YahooImageSearchLoadingImpl>(this, _$identity);
+  _$$ScreenLoadingImplCopyWith<_$ScreenLoadingImpl> get copyWith =>
+      __$$ScreenLoadingImplCopyWithImpl<_$ScreenLoadingImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(SearchContext context) initial,
-    required TResult Function(SearchContext context) loading,
-    required TResult Function(List<ImageResult> results, SearchContext context)
-        success,
-    required TResult Function(String message, SearchContext context) error,
+    required TResult Function(String word) initial,
+    required TResult Function(String word) loading,
+    required TResult Function(List<ImageResult> results, String word) success,
+    required TResult Function(String message, String word) error,
   }) {
-    return loading(context);
+    return loading(word);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(SearchContext context)? initial,
-    TResult? Function(SearchContext context)? loading,
-    TResult? Function(List<ImageResult> results, SearchContext context)?
-        success,
-    TResult? Function(String message, SearchContext context)? error,
+    TResult? Function(String word)? initial,
+    TResult? Function(String word)? loading,
+    TResult? Function(List<ImageResult> results, String word)? success,
+    TResult? Function(String message, String word)? error,
   }) {
-    return loading?.call(context);
+    return loading?.call(word);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(SearchContext context)? initial,
-    TResult Function(SearchContext context)? loading,
-    TResult Function(List<ImageResult> results, SearchContext context)? success,
-    TResult Function(String message, SearchContext context)? error,
+    TResult Function(String word)? initial,
+    TResult Function(String word)? loading,
+    TResult Function(List<ImageResult> results, String word)? success,
+    TResult Function(String message, String word)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
-      return loading(context);
+      return loading(word);
     }
     return orElse();
   }
@@ -527,10 +525,10 @@ class _$YahooImageSearchLoadingImpl implements YahooImageSearchLoading {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(YahooImageSearchInitial value) initial,
-    required TResult Function(YahooImageSearchLoading value) loading,
-    required TResult Function(YahooImageSearchSuccess value) success,
-    required TResult Function(YahooImageSearchError value) error,
+    required TResult Function(ScreenInitial value) initial,
+    required TResult Function(ScreenLoading value) loading,
+    required TResult Function(ScreenSuccess value) success,
+    required TResult Function(ScreenError value) error,
   }) {
     return loading(this);
   }
@@ -538,10 +536,10 @@ class _$YahooImageSearchLoadingImpl implements YahooImageSearchLoading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(YahooImageSearchInitial value)? initial,
-    TResult? Function(YahooImageSearchLoading value)? loading,
-    TResult? Function(YahooImageSearchSuccess value)? success,
-    TResult? Function(YahooImageSearchError value)? error,
+    TResult? Function(ScreenInitial value)? initial,
+    TResult? Function(ScreenLoading value)? loading,
+    TResult? Function(ScreenSuccess value)? success,
+    TResult? Function(ScreenError value)? error,
   }) {
     return loading?.call(this);
   }
@@ -549,10 +547,10 @@ class _$YahooImageSearchLoadingImpl implements YahooImageSearchLoading {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(YahooImageSearchInitial value)? initial,
-    TResult Function(YahooImageSearchLoading value)? loading,
-    TResult Function(YahooImageSearchSuccess value)? success,
-    TResult Function(YahooImageSearchError value)? error,
+    TResult Function(ScreenInitial value)? initial,
+    TResult Function(ScreenLoading value)? loading,
+    TResult Function(ScreenSuccess value)? success,
+    TResult Function(ScreenError value)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -562,67 +560,60 @@ class _$YahooImageSearchLoadingImpl implements YahooImageSearchLoading {
   }
 }
 
-abstract class YahooImageSearchLoading implements YahooImageSearchState {
-  const factory YahooImageSearchLoading(final SearchContext context) =
-      _$YahooImageSearchLoadingImpl;
+abstract class ScreenLoading implements ScreenState {
+  const factory ScreenLoading(final String word) = _$ScreenLoadingImpl;
 
   @override
-  SearchContext get context;
+  String get word;
   @override
   @JsonKey(ignore: true)
-  _$$YahooImageSearchLoadingImplCopyWith<_$YahooImageSearchLoadingImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  _$$ScreenLoadingImplCopyWith<_$ScreenLoadingImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$YahooImageSearchSuccessImplCopyWith<$Res>
-    implements $YahooImageSearchStateCopyWith<$Res> {
-  factory _$$YahooImageSearchSuccessImplCopyWith(
-          _$YahooImageSearchSuccessImpl value,
-          $Res Function(_$YahooImageSearchSuccessImpl) then) =
-      __$$YahooImageSearchSuccessImplCopyWithImpl<$Res>;
+abstract class _$$ScreenSuccessImplCopyWith<$Res>
+    implements $ScreenStateCopyWith<$Res> {
+  factory _$$ScreenSuccessImplCopyWith(
+          _$ScreenSuccessImpl value, $Res Function(_$ScreenSuccessImpl) then) =
+      __$$ScreenSuccessImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<ImageResult> results, SearchContext context});
-
-  @override
-  $SearchContextCopyWith<$Res> get context;
+  $Res call({List<ImageResult> results, String word});
 }
 
 /// @nodoc
-class __$$YahooImageSearchSuccessImplCopyWithImpl<$Res>
-    extends _$YahooImageSearchStateCopyWithImpl<$Res,
-        _$YahooImageSearchSuccessImpl>
-    implements _$$YahooImageSearchSuccessImplCopyWith<$Res> {
-  __$$YahooImageSearchSuccessImplCopyWithImpl(
-      _$YahooImageSearchSuccessImpl _value,
-      $Res Function(_$YahooImageSearchSuccessImpl) _then)
+class __$$ScreenSuccessImplCopyWithImpl<$Res>
+    extends _$ScreenStateCopyWithImpl<$Res, _$ScreenSuccessImpl>
+    implements _$$ScreenSuccessImplCopyWith<$Res> {
+  __$$ScreenSuccessImplCopyWithImpl(
+      _$ScreenSuccessImpl _value, $Res Function(_$ScreenSuccessImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? results = null,
-    Object? context = null,
+    Object? word = null,
   }) {
-    return _then(_$YahooImageSearchSuccessImpl(
+    return _then(_$ScreenSuccessImpl(
       results: null == results
           ? _value._results
           : results // ignore: cast_nullable_to_non_nullable
               as List<ImageResult>,
-      context: null == context
-          ? _value.context
-          : context // ignore: cast_nullable_to_non_nullable
-              as SearchContext,
+      word: null == word
+          ? _value.word
+          : word // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
 
-class _$YahooImageSearchSuccessImpl implements YahooImageSearchSuccess {
-  const _$YahooImageSearchSuccessImpl(
-      {required final List<ImageResult> results, required this.context})
+class _$ScreenSuccessImpl implements ScreenSuccess {
+  const _$ScreenSuccessImpl(
+      {required final List<ImageResult> results, required this.word})
       : _results = results;
 
   final List<ImageResult> _results;
@@ -634,68 +625,65 @@ class _$YahooImageSearchSuccessImpl implements YahooImageSearchSuccess {
   }
 
   @override
-  final SearchContext context;
+  final String word;
 
   @override
   String toString() {
-    return 'YahooImageSearchState.success(results: $results, context: $context)';
+    return 'ScreenState.success(results: $results, word: $word)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$YahooImageSearchSuccessImpl &&
+            other is _$ScreenSuccessImpl &&
             const DeepCollectionEquality().equals(other._results, _results) &&
-            (identical(other.context, context) || other.context == context));
+            (identical(other.word, word) || other.word == word));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_results), context);
+      runtimeType, const DeepCollectionEquality().hash(_results), word);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$YahooImageSearchSuccessImplCopyWith<_$YahooImageSearchSuccessImpl>
-      get copyWith => __$$YahooImageSearchSuccessImplCopyWithImpl<
-          _$YahooImageSearchSuccessImpl>(this, _$identity);
+  _$$ScreenSuccessImplCopyWith<_$ScreenSuccessImpl> get copyWith =>
+      __$$ScreenSuccessImplCopyWithImpl<_$ScreenSuccessImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(SearchContext context) initial,
-    required TResult Function(SearchContext context) loading,
-    required TResult Function(List<ImageResult> results, SearchContext context)
-        success,
-    required TResult Function(String message, SearchContext context) error,
+    required TResult Function(String word) initial,
+    required TResult Function(String word) loading,
+    required TResult Function(List<ImageResult> results, String word) success,
+    required TResult Function(String message, String word) error,
   }) {
-    return success(results, context);
+    return success(results, word);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(SearchContext context)? initial,
-    TResult? Function(SearchContext context)? loading,
-    TResult? Function(List<ImageResult> results, SearchContext context)?
-        success,
-    TResult? Function(String message, SearchContext context)? error,
+    TResult? Function(String word)? initial,
+    TResult? Function(String word)? loading,
+    TResult? Function(List<ImageResult> results, String word)? success,
+    TResult? Function(String message, String word)? error,
   }) {
-    return success?.call(results, context);
+    return success?.call(results, word);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(SearchContext context)? initial,
-    TResult Function(SearchContext context)? loading,
-    TResult Function(List<ImageResult> results, SearchContext context)? success,
-    TResult Function(String message, SearchContext context)? error,
+    TResult Function(String word)? initial,
+    TResult Function(String word)? loading,
+    TResult Function(List<ImageResult> results, String word)? success,
+    TResult Function(String message, String word)? error,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(results, context);
+      return success(results, word);
     }
     return orElse();
   }
@@ -703,10 +691,10 @@ class _$YahooImageSearchSuccessImpl implements YahooImageSearchSuccess {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(YahooImageSearchInitial value) initial,
-    required TResult Function(YahooImageSearchLoading value) loading,
-    required TResult Function(YahooImageSearchSuccess value) success,
-    required TResult Function(YahooImageSearchError value) error,
+    required TResult Function(ScreenInitial value) initial,
+    required TResult Function(ScreenLoading value) loading,
+    required TResult Function(ScreenSuccess value) success,
+    required TResult Function(ScreenError value) error,
   }) {
     return success(this);
   }
@@ -714,10 +702,10 @@ class _$YahooImageSearchSuccessImpl implements YahooImageSearchSuccess {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(YahooImageSearchInitial value)? initial,
-    TResult? Function(YahooImageSearchLoading value)? loading,
-    TResult? Function(YahooImageSearchSuccess value)? success,
-    TResult? Function(YahooImageSearchError value)? error,
+    TResult? Function(ScreenInitial value)? initial,
+    TResult? Function(ScreenLoading value)? loading,
+    TResult? Function(ScreenSuccess value)? success,
+    TResult? Function(ScreenError value)? error,
   }) {
     return success?.call(this);
   }
@@ -725,10 +713,10 @@ class _$YahooImageSearchSuccessImpl implements YahooImageSearchSuccess {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(YahooImageSearchInitial value)? initial,
-    TResult Function(YahooImageSearchLoading value)? loading,
-    TResult Function(YahooImageSearchSuccess value)? success,
-    TResult Function(YahooImageSearchError value)? error,
+    TResult Function(ScreenInitial value)? initial,
+    TResult Function(ScreenLoading value)? loading,
+    TResult Function(ScreenSuccess value)? success,
+    TResult Function(ScreenError value)? error,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -738,133 +726,124 @@ class _$YahooImageSearchSuccessImpl implements YahooImageSearchSuccess {
   }
 }
 
-abstract class YahooImageSearchSuccess implements YahooImageSearchState {
-  const factory YahooImageSearchSuccess(
+abstract class ScreenSuccess implements ScreenState {
+  const factory ScreenSuccess(
       {required final List<ImageResult> results,
-      required final SearchContext context}) = _$YahooImageSearchSuccessImpl;
+      required final String word}) = _$ScreenSuccessImpl;
 
   List<ImageResult> get results;
   @override
-  SearchContext get context;
+  String get word;
   @override
   @JsonKey(ignore: true)
-  _$$YahooImageSearchSuccessImplCopyWith<_$YahooImageSearchSuccessImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  _$$ScreenSuccessImplCopyWith<_$ScreenSuccessImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$YahooImageSearchErrorImplCopyWith<$Res>
-    implements $YahooImageSearchStateCopyWith<$Res> {
-  factory _$$YahooImageSearchErrorImplCopyWith(
-          _$YahooImageSearchErrorImpl value,
-          $Res Function(_$YahooImageSearchErrorImpl) then) =
-      __$$YahooImageSearchErrorImplCopyWithImpl<$Res>;
+abstract class _$$ScreenErrorImplCopyWith<$Res>
+    implements $ScreenStateCopyWith<$Res> {
+  factory _$$ScreenErrorImplCopyWith(
+          _$ScreenErrorImpl value, $Res Function(_$ScreenErrorImpl) then) =
+      __$$ScreenErrorImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String message, SearchContext context});
-
-  @override
-  $SearchContextCopyWith<$Res> get context;
+  $Res call({String message, String word});
 }
 
 /// @nodoc
-class __$$YahooImageSearchErrorImplCopyWithImpl<$Res>
-    extends _$YahooImageSearchStateCopyWithImpl<$Res,
-        _$YahooImageSearchErrorImpl>
-    implements _$$YahooImageSearchErrorImplCopyWith<$Res> {
-  __$$YahooImageSearchErrorImplCopyWithImpl(_$YahooImageSearchErrorImpl _value,
-      $Res Function(_$YahooImageSearchErrorImpl) _then)
+class __$$ScreenErrorImplCopyWithImpl<$Res>
+    extends _$ScreenStateCopyWithImpl<$Res, _$ScreenErrorImpl>
+    implements _$$ScreenErrorImplCopyWith<$Res> {
+  __$$ScreenErrorImplCopyWithImpl(
+      _$ScreenErrorImpl _value, $Res Function(_$ScreenErrorImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? message = null,
-    Object? context = null,
+    Object? word = null,
   }) {
-    return _then(_$YahooImageSearchErrorImpl(
+    return _then(_$ScreenErrorImpl(
       message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
-      context: null == context
-          ? _value.context
-          : context // ignore: cast_nullable_to_non_nullable
-              as SearchContext,
+      word: null == word
+          ? _value.word
+          : word // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
 
-class _$YahooImageSearchErrorImpl implements YahooImageSearchError {
-  const _$YahooImageSearchErrorImpl(
-      {required this.message, required this.context});
+class _$ScreenErrorImpl implements ScreenError {
+  const _$ScreenErrorImpl({required this.message, required this.word});
 
   @override
   final String message;
   @override
-  final SearchContext context;
+  final String word;
 
   @override
   String toString() {
-    return 'YahooImageSearchState.error(message: $message, context: $context)';
+    return 'ScreenState.error(message: $message, word: $word)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$YahooImageSearchErrorImpl &&
+            other is _$ScreenErrorImpl &&
             (identical(other.message, message) || other.message == message) &&
-            (identical(other.context, context) || other.context == context));
+            (identical(other.word, word) || other.word == word));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, message, context);
+  int get hashCode => Object.hash(runtimeType, message, word);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$YahooImageSearchErrorImplCopyWith<_$YahooImageSearchErrorImpl>
-      get copyWith => __$$YahooImageSearchErrorImplCopyWithImpl<
-          _$YahooImageSearchErrorImpl>(this, _$identity);
+  _$$ScreenErrorImplCopyWith<_$ScreenErrorImpl> get copyWith =>
+      __$$ScreenErrorImplCopyWithImpl<_$ScreenErrorImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(SearchContext context) initial,
-    required TResult Function(SearchContext context) loading,
-    required TResult Function(List<ImageResult> results, SearchContext context)
-        success,
-    required TResult Function(String message, SearchContext context) error,
+    required TResult Function(String word) initial,
+    required TResult Function(String word) loading,
+    required TResult Function(List<ImageResult> results, String word) success,
+    required TResult Function(String message, String word) error,
   }) {
-    return error(message, context);
+    return error(message, word);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(SearchContext context)? initial,
-    TResult? Function(SearchContext context)? loading,
-    TResult? Function(List<ImageResult> results, SearchContext context)?
-        success,
-    TResult? Function(String message, SearchContext context)? error,
+    TResult? Function(String word)? initial,
+    TResult? Function(String word)? loading,
+    TResult? Function(List<ImageResult> results, String word)? success,
+    TResult? Function(String message, String word)? error,
   }) {
-    return error?.call(message, context);
+    return error?.call(message, word);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(SearchContext context)? initial,
-    TResult Function(SearchContext context)? loading,
-    TResult Function(List<ImageResult> results, SearchContext context)? success,
-    TResult Function(String message, SearchContext context)? error,
+    TResult Function(String word)? initial,
+    TResult Function(String word)? loading,
+    TResult Function(List<ImageResult> results, String word)? success,
+    TResult Function(String message, String word)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(message, context);
+      return error(message, word);
     }
     return orElse();
   }
@@ -872,10 +851,10 @@ class _$YahooImageSearchErrorImpl implements YahooImageSearchError {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(YahooImageSearchInitial value) initial,
-    required TResult Function(YahooImageSearchLoading value) loading,
-    required TResult Function(YahooImageSearchSuccess value) success,
-    required TResult Function(YahooImageSearchError value) error,
+    required TResult Function(ScreenInitial value) initial,
+    required TResult Function(ScreenLoading value) loading,
+    required TResult Function(ScreenSuccess value) success,
+    required TResult Function(ScreenError value) error,
   }) {
     return error(this);
   }
@@ -883,10 +862,10 @@ class _$YahooImageSearchErrorImpl implements YahooImageSearchError {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(YahooImageSearchInitial value)? initial,
-    TResult? Function(YahooImageSearchLoading value)? loading,
-    TResult? Function(YahooImageSearchSuccess value)? success,
-    TResult? Function(YahooImageSearchError value)? error,
+    TResult? Function(ScreenInitial value)? initial,
+    TResult? Function(ScreenLoading value)? loading,
+    TResult? Function(ScreenSuccess value)? success,
+    TResult? Function(ScreenError value)? error,
   }) {
     return error?.call(this);
   }
@@ -894,10 +873,10 @@ class _$YahooImageSearchErrorImpl implements YahooImageSearchError {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(YahooImageSearchInitial value)? initial,
-    TResult Function(YahooImageSearchLoading value)? loading,
-    TResult Function(YahooImageSearchSuccess value)? success,
-    TResult Function(YahooImageSearchError value)? error,
+    TResult Function(ScreenInitial value)? initial,
+    TResult Function(ScreenLoading value)? loading,
+    TResult Function(ScreenSuccess value)? success,
+    TResult Function(ScreenError value)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -907,16 +886,606 @@ class _$YahooImageSearchErrorImpl implements YahooImageSearchError {
   }
 }
 
-abstract class YahooImageSearchError implements YahooImageSearchState {
-  const factory YahooImageSearchError(
+abstract class ScreenError implements ScreenState {
+  const factory ScreenError(
       {required final String message,
-      required final SearchContext context}) = _$YahooImageSearchErrorImpl;
+      required final String word}) = _$ScreenErrorImpl;
 
   String get message;
   @override
-  SearchContext get context;
+  String get word;
   @override
   @JsonKey(ignore: true)
-  _$$YahooImageSearchErrorImplCopyWith<_$YahooImageSearchErrorImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  _$$ScreenErrorImplCopyWith<_$ScreenErrorImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$DialogState {
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() idle,
+    required TResult Function() loading,
+    required TResult Function(String message) success,
+    required TResult Function(String message) error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? idle,
+    TResult? Function()? loading,
+    TResult? Function(String message)? success,
+    TResult? Function(String message)? error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? idle,
+    TResult Function()? loading,
+    TResult Function(String message)? success,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(DialogIdle value) idle,
+    required TResult Function(DialogLoading value) loading,
+    required TResult Function(DialogSuccess value) success,
+    required TResult Function(DialogError value) error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(DialogIdle value)? idle,
+    TResult? Function(DialogLoading value)? loading,
+    TResult? Function(DialogSuccess value)? success,
+    TResult? Function(DialogError value)? error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(DialogIdle value)? idle,
+    TResult Function(DialogLoading value)? loading,
+    TResult Function(DialogSuccess value)? success,
+    TResult Function(DialogError value)? error,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $DialogStateCopyWith<$Res> {
+  factory $DialogStateCopyWith(
+          DialogState value, $Res Function(DialogState) then) =
+      _$DialogStateCopyWithImpl<$Res, DialogState>;
+}
+
+/// @nodoc
+class _$DialogStateCopyWithImpl<$Res, $Val extends DialogState>
+    implements $DialogStateCopyWith<$Res> {
+  _$DialogStateCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+}
+
+/// @nodoc
+abstract class _$$DialogIdleImplCopyWith<$Res> {
+  factory _$$DialogIdleImplCopyWith(
+          _$DialogIdleImpl value, $Res Function(_$DialogIdleImpl) then) =
+      __$$DialogIdleImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$DialogIdleImplCopyWithImpl<$Res>
+    extends _$DialogStateCopyWithImpl<$Res, _$DialogIdleImpl>
+    implements _$$DialogIdleImplCopyWith<$Res> {
+  __$$DialogIdleImplCopyWithImpl(
+      _$DialogIdleImpl _value, $Res Function(_$DialogIdleImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$DialogIdleImpl implements DialogIdle {
+  const _$DialogIdleImpl();
+
+  @override
+  String toString() {
+    return 'DialogState.idle()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$DialogIdleImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() idle,
+    required TResult Function() loading,
+    required TResult Function(String message) success,
+    required TResult Function(String message) error,
+  }) {
+    return idle();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? idle,
+    TResult? Function()? loading,
+    TResult? Function(String message)? success,
+    TResult? Function(String message)? error,
+  }) {
+    return idle?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? idle,
+    TResult Function()? loading,
+    TResult Function(String message)? success,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    if (idle != null) {
+      return idle();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(DialogIdle value) idle,
+    required TResult Function(DialogLoading value) loading,
+    required TResult Function(DialogSuccess value) success,
+    required TResult Function(DialogError value) error,
+  }) {
+    return idle(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(DialogIdle value)? idle,
+    TResult? Function(DialogLoading value)? loading,
+    TResult? Function(DialogSuccess value)? success,
+    TResult? Function(DialogError value)? error,
+  }) {
+    return idle?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(DialogIdle value)? idle,
+    TResult Function(DialogLoading value)? loading,
+    TResult Function(DialogSuccess value)? success,
+    TResult Function(DialogError value)? error,
+    required TResult orElse(),
+  }) {
+    if (idle != null) {
+      return idle(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class DialogIdle implements DialogState {
+  const factory DialogIdle() = _$DialogIdleImpl;
+}
+
+/// @nodoc
+abstract class _$$DialogLoadingImplCopyWith<$Res> {
+  factory _$$DialogLoadingImplCopyWith(
+          _$DialogLoadingImpl value, $Res Function(_$DialogLoadingImpl) then) =
+      __$$DialogLoadingImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$DialogLoadingImplCopyWithImpl<$Res>
+    extends _$DialogStateCopyWithImpl<$Res, _$DialogLoadingImpl>
+    implements _$$DialogLoadingImplCopyWith<$Res> {
+  __$$DialogLoadingImplCopyWithImpl(
+      _$DialogLoadingImpl _value, $Res Function(_$DialogLoadingImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$DialogLoadingImpl implements DialogLoading {
+  const _$DialogLoadingImpl();
+
+  @override
+  String toString() {
+    return 'DialogState.loading()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$DialogLoadingImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() idle,
+    required TResult Function() loading,
+    required TResult Function(String message) success,
+    required TResult Function(String message) error,
+  }) {
+    return loading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? idle,
+    TResult? Function()? loading,
+    TResult? Function(String message)? success,
+    TResult? Function(String message)? error,
+  }) {
+    return loading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? idle,
+    TResult Function()? loading,
+    TResult Function(String message)? success,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(DialogIdle value) idle,
+    required TResult Function(DialogLoading value) loading,
+    required TResult Function(DialogSuccess value) success,
+    required TResult Function(DialogError value) error,
+  }) {
+    return loading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(DialogIdle value)? idle,
+    TResult? Function(DialogLoading value)? loading,
+    TResult? Function(DialogSuccess value)? success,
+    TResult? Function(DialogError value)? error,
+  }) {
+    return loading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(DialogIdle value)? idle,
+    TResult Function(DialogLoading value)? loading,
+    TResult Function(DialogSuccess value)? success,
+    TResult Function(DialogError value)? error,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class DialogLoading implements DialogState {
+  const factory DialogLoading() = _$DialogLoadingImpl;
+}
+
+/// @nodoc
+abstract class _$$DialogSuccessImplCopyWith<$Res> {
+  factory _$$DialogSuccessImplCopyWith(
+          _$DialogSuccessImpl value, $Res Function(_$DialogSuccessImpl) then) =
+      __$$DialogSuccessImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String message});
+}
+
+/// @nodoc
+class __$$DialogSuccessImplCopyWithImpl<$Res>
+    extends _$DialogStateCopyWithImpl<$Res, _$DialogSuccessImpl>
+    implements _$$DialogSuccessImplCopyWith<$Res> {
+  __$$DialogSuccessImplCopyWithImpl(
+      _$DialogSuccessImpl _value, $Res Function(_$DialogSuccessImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$DialogSuccessImpl(
+      null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$DialogSuccessImpl implements DialogSuccess {
+  const _$DialogSuccessImpl(this.message);
+
+  @override
+  final String message;
+
+  @override
+  String toString() {
+    return 'DialogState.success(message: $message)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$DialogSuccessImpl &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, message);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$DialogSuccessImplCopyWith<_$DialogSuccessImpl> get copyWith =>
+      __$$DialogSuccessImplCopyWithImpl<_$DialogSuccessImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() idle,
+    required TResult Function() loading,
+    required TResult Function(String message) success,
+    required TResult Function(String message) error,
+  }) {
+    return success(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? idle,
+    TResult? Function()? loading,
+    TResult? Function(String message)? success,
+    TResult? Function(String message)? error,
+  }) {
+    return success?.call(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? idle,
+    TResult Function()? loading,
+    TResult Function(String message)? success,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    if (success != null) {
+      return success(message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(DialogIdle value) idle,
+    required TResult Function(DialogLoading value) loading,
+    required TResult Function(DialogSuccess value) success,
+    required TResult Function(DialogError value) error,
+  }) {
+    return success(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(DialogIdle value)? idle,
+    TResult? Function(DialogLoading value)? loading,
+    TResult? Function(DialogSuccess value)? success,
+    TResult? Function(DialogError value)? error,
+  }) {
+    return success?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(DialogIdle value)? idle,
+    TResult Function(DialogLoading value)? loading,
+    TResult Function(DialogSuccess value)? success,
+    TResult Function(DialogError value)? error,
+    required TResult orElse(),
+  }) {
+    if (success != null) {
+      return success(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class DialogSuccess implements DialogState {
+  const factory DialogSuccess(final String message) = _$DialogSuccessImpl;
+
+  String get message;
+  @JsonKey(ignore: true)
+  _$$DialogSuccessImplCopyWith<_$DialogSuccessImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$DialogErrorImplCopyWith<$Res> {
+  factory _$$DialogErrorImplCopyWith(
+          _$DialogErrorImpl value, $Res Function(_$DialogErrorImpl) then) =
+      __$$DialogErrorImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String message});
+}
+
+/// @nodoc
+class __$$DialogErrorImplCopyWithImpl<$Res>
+    extends _$DialogStateCopyWithImpl<$Res, _$DialogErrorImpl>
+    implements _$$DialogErrorImplCopyWith<$Res> {
+  __$$DialogErrorImplCopyWithImpl(
+      _$DialogErrorImpl _value, $Res Function(_$DialogErrorImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$DialogErrorImpl(
+      null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$DialogErrorImpl implements DialogError {
+  const _$DialogErrorImpl(this.message);
+
+  @override
+  final String message;
+
+  @override
+  String toString() {
+    return 'DialogState.error(message: $message)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$DialogErrorImpl &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, message);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$DialogErrorImplCopyWith<_$DialogErrorImpl> get copyWith =>
+      __$$DialogErrorImplCopyWithImpl<_$DialogErrorImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() idle,
+    required TResult Function() loading,
+    required TResult Function(String message) success,
+    required TResult Function(String message) error,
+  }) {
+    return error(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? idle,
+    TResult? Function()? loading,
+    TResult? Function(String message)? success,
+    TResult? Function(String message)? error,
+  }) {
+    return error?.call(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? idle,
+    TResult Function()? loading,
+    TResult Function(String message)? success,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    if (error != null) {
+      return error(message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(DialogIdle value) idle,
+    required TResult Function(DialogLoading value) loading,
+    required TResult Function(DialogSuccess value) success,
+    required TResult Function(DialogError value) error,
+  }) {
+    return error(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(DialogIdle value)? idle,
+    TResult? Function(DialogLoading value)? loading,
+    TResult? Function(DialogSuccess value)? success,
+    TResult? Function(DialogError value)? error,
+  }) {
+    return error?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(DialogIdle value)? idle,
+    TResult Function(DialogLoading value)? loading,
+    TResult Function(DialogSuccess value)? success,
+    TResult Function(DialogError value)? error,
+    required TResult orElse(),
+  }) {
+    if (error != null) {
+      return error(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class DialogError implements DialogState {
+  const factory DialogError(final String message) = _$DialogErrorImpl;
+
+  String get message;
+  @JsonKey(ignore: true)
+  _$$DialogErrorImplCopyWith<_$DialogErrorImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

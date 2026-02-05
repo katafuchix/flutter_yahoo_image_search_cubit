@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import '../repository/image_repository_impl.dart';
+import '../service/gallery_service.dart';
 import 'components/photo_browser.dart';
 import 'yahoo_image_search_cubit.dart';
 import 'yahoo_image_search_state.dart';
@@ -14,7 +15,8 @@ class YahooImageSearchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // BlocProvider で Cubit を生成・注入
     return BlocProvider(
-      create: (_) => YahooImageSearchCubit(ImageRepositoryImpl(Dio())),
+      create: (_) =>
+          YahooImageSearchCubit(ImageRepositoryImpl(Dio()), GalleryService()),
       child: const _YahooImageSearchScreen(),
     );
   }
@@ -30,42 +32,50 @@ class _YahooImageSearchScreen extends StatelessWidget {
       // BlocConsumer で状態の監視とダイアログの制御を両立
       body: BlocConsumer<YahooImageSearchCubit, YahooImageSearchState>(
         listener: (context, state) {
-          // 1. Loadingの制御
-          // stateが「loading」状態の時だけshowし、それ以外はdismissする
-          state.maybeWhen(
-            loading: (word) => SmartDialog.showLoading(),
-            orElse: () => SmartDialog.dismiss(),
-          );
-          // 2. エラー発生時に 一度だけ SnackBar を表示
-          // stateが「error」状態の時だけ実行される
-          state.maybeWhen(
-            error: (message, word) {
+          // --- 1. ローディング制御 (Screen または Dialog のいずれかが Loading なら表示) ---
+          final isScreenLoading = state.screen is ScreenLoading;
+          final isDialogLoading = state.dialog is DialogLoading;
+
+          if (isScreenLoading || isDialogLoading) {
+            SmartDialog.showLoading(msg: isDialogLoading ? '保存中...' : '検索中...');
+          } else {
+            SmartDialog.dismiss();
+          }
+
+          // --- 2. 検索エラーの処理 (ScreenState の Error を監視) ---
+          // listenWhen で「screen の状態が変わった時だけ」に絞るとより効率的です
+          state.screen.maybeWhen(
+            error: (message, _) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text('エラーが発生しました: $message'),
+                  content: Text('検索エラー: $message'),
                   backgroundColor: Colors.redAccent,
                   behavior: SnackBarBehavior.floating,
                   action: SnackBarAction(
                     label: '閉じる',
                     textColor: Colors.white,
-                    onPressed: () {
-                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                    },
+                    onPressed: () =>
+                        ScaffoldMessenger.of(context).hideCurrentSnackBar(),
                   ),
                 ),
               );
             },
-            orElse: () {}, // エラー以外の時は何もしない
+            orElse: () {},
+          );
+
+          // --- 3. 保存結果の処理 (DialogState の Success/Error を監視) ---
+          state.dialog.maybeWhen(
+            success: (msg) => SmartDialog.showToast(msg),
+            error: (msg) => SmartDialog.showToast('保存失敗: $msg'),
+            orElse: () {},
           );
         },
         builder: (context, state) {
           final cubit = context.read<YahooImageSearchCubit>();
 
-          // TextField に渡すための検索ワードを状態から取得（共通で持っていないので工夫が必要）
-          final currentSearchWord = state.maybeWhen(
-            success: (_, word) => word,
-            orElse: () => "", // initial や loading の時は空文字、あるいは別途変数を保持
-          );
+          // state.screen から現在のワードを取得
+          //final currentWord = state.screen.word;
+
           return Column(
             children: [
               Padding(
@@ -84,14 +94,15 @@ class _YahooImageSearchScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     ElevatedButton(
+                      // cubitの判定ロジックと、現在の画面がロード中（ScreenLoading）でないかをチェック
                       onPressed: cubit.isSearchButtonEnabled &&
-                              state is! YahooImageSearchLoading
+                              state.screen is! ScreenLoading
                           ? () {
                               FocusScope.of(context).unfocus();
                               cubit.search();
                             }
                           : null,
-                      child: state.maybeWhen(
+                      child: state.screen.maybeWhen(
                         loading: (_) => const SizedBox(
                           width: 16,
                           height: 16,
@@ -100,7 +111,7 @@ class _YahooImageSearchScreen extends StatelessWidget {
                         orElse: () => const Text('検索'),
                       ),
                     ),
-                    state.maybeWhen(
+                    state.screen.maybeWhen(
                       error: (message, _) => Padding(
                         padding: const EdgeInsets.only(top: 10),
                         child: Text(
@@ -117,7 +128,7 @@ class _YahooImageSearchScreen extends StatelessWidget {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                  child: state.when(
+                  child: state.screen.when(
                     // 1. 初期状態：何も表示しない、またはメッセージ
                     initial: (_) => const Center(child: Text('キーワードを入力してください')),
 
@@ -151,6 +162,8 @@ class _YahooImageSearchScreen extends StatelessWidget {
                             results.map((e) => e.url).toList(),
                             index,
                           ),
+                          // 長押しで保存機能を呼び出す例
+                          onLongPress: () => cubit.downloadImage(imageUrl),
                           child: Image.network(imageUrl, fit: BoxFit.cover),
                         );
                       },
