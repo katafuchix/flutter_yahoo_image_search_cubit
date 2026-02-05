@@ -35,7 +35,10 @@ class PhotoBrowser extends StatelessWidget {
             right: 20,
             child: IconButton(
               icon: const Icon(Icons.close, color: Colors.white, size: 30),
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () {
+                Navigator.of(context).pop();
+                FocusScope.of(context).unfocus();
+              },
             ),
           ),
         ],
