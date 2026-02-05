@@ -31,32 +31,41 @@ class _YahooImageSearchScreen extends StatelessWidget {
       body: BlocConsumer<YahooImageSearchCubit, YahooImageSearchState>(
         listener: (context, state) {
           // 1. Loadingの制御
-          if (state.isLoading) {
-            SmartDialog.showLoading();
-          } else {
-            SmartDialog.dismiss();
-          }
+          // stateが「loading」状態の時だけshowし、それ以外はdismissする
+          state.maybeWhen(
+            loading: (word) => SmartDialog.showLoading(),
+            orElse: () => SmartDialog.dismiss(),
+          );
           // 2. エラー発生時に 一度だけ SnackBar を表示
-          if (state.error != null) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('エラーが発生しました: ${state.error}'),
-                backgroundColor: Colors.redAccent,
-                behavior: SnackBarBehavior.floating, // 浮いた感じのモダンなデザイン
-                action: SnackBarAction(
-                  label: '閉じる',
-                  textColor: Colors.white,
-                  onPressed: () {
-                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                  },
+          // stateが「error」状態の時だけ実行される
+          state.maybeWhen(
+            error: (message, word) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('エラーが発生しました: $message'),
+                  backgroundColor: Colors.redAccent,
+                  behavior: SnackBarBehavior.floating,
+                  action: SnackBarAction(
+                    label: '閉じる',
+                    textColor: Colors.white,
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                    },
+                  ),
                 ),
-              ),
-            );
-          }
+              );
+            },
+            orElse: () {}, // エラー以外の時は何もしない
+          );
         },
         builder: (context, state) {
           final cubit = context.read<YahooImageSearchCubit>();
 
+          // TextField に渡すための検索ワードを状態から取得（共通で持っていないので工夫が必要）
+          final currentSearchWord = state.maybeWhen(
+            success: (_, word) => word,
+            orElse: () => "", // initial や loading の時は空文字、あるいは別途変数を保持
+          );
           return Column(
             children: [
               Padding(
@@ -64,53 +73,88 @@ class _YahooImageSearchScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     TextField(
-                      onChanged: cubit.setSearchWord,
+                      onChanged: (value) => cubit.setSearchWord(value),
                       decoration: const InputDecoration(
                         labelText: '検索キーワード',
                         border: OutlineInputBorder(),
                         isDense: true,
-                        contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 12.0, horizontal: 12.0),
                       ),
                     ),
                     const SizedBox(height: 10),
                     ElevatedButton(
-                      onPressed: state.isSearchButtonEnabled && !state.isLoading
+                      onPressed: cubit.isSearchButtonEnabled &&
+                              state is! YahooImageSearchLoading
                           ? () {
-                        FocusScope.of(context).unfocus();
-                        cubit.search();
-                      }
+                              FocusScope.of(context).unfocus();
+                              cubit.search();
+                            }
                           : null,
-                      child: state.isLoading
-                          ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2))
-                          : const Text('検索'),
-                    ),
-                    if (state.error != null)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Text('エラー: ${state.error}', style: const TextStyle(color: Colors.red)),
+                      child: state.maybeWhen(
+                        loading: (_) => const SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        ),
+                        orElse: () => const Text('検索'),
                       ),
+                    ),
+                    state.maybeWhen(
+                      error: (message, _) => Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Text(
+                          'エラー: $message',
+                          style: const TextStyle(color: Colors.red),
+                        ),
+                      ),
+                      // error 以外の状態（initial, loading, success）では何も表示しない
+                      orElse: () => const SizedBox.shrink(),
+                    ),
                   ],
                 ),
               ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                  child: GridView.builder(
-                    keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 8.0,
-                      mainAxisSpacing: 8.0,
-                      childAspectRatio: 1.0,
+                  child: state.when(
+                    // 1. 初期状態：何も表示しない、またはメッセージ
+                    initial: (_) => const Center(child: Text('キーワードを入力してください')),
+
+                    // 2. ロード中：前回までの結果を表示し続けるか、空にするか選べますが、
+                    // ここでは Union形式らしく「何も表示しない（SmartDialogに任せる）」形にします
+                    loading: (_) => const SizedBox.shrink(),
+
+                    // 3. エラー時：エラーメッセージを表示
+                    error: (message, _) => Center(
+                      child: Text(message,
+                          style: const TextStyle(color: Colors.red)),
                     ),
-                    itemCount: state.results.length,
-                    itemBuilder: (context, index) {
-                      final imageUrl = state.results[index].url;
-                      return GestureDetector(
-                        onTap: () => _showPhotoBrowser(context, state.results.map((e) => e.url).toList(), index),
-                        child: Image.network(imageUrl, fit: BoxFit.cover),
-                      );
-                    },
+
+                    // 4. 成功時：ここで初めて results にアクセスできる
+                    success: (results, searchWord) => GridView.builder(
+                      keyboardDismissBehavior:
+                          ScrollViewKeyboardDismissBehavior.onDrag,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 8.0,
+                        mainAxisSpacing: 8.0,
+                        childAspectRatio: 1.0,
+                      ),
+                      itemCount: results.length,
+                      itemBuilder: (context, index) {
+                        final imageUrl = results[index].url;
+                        return GestureDetector(
+                          onTap: () => _showPhotoBrowser(
+                            context,
+                            results.map((e) => e.url).toList(),
+                            index,
+                          ),
+                          child: Image.network(imageUrl, fit: BoxFit.cover),
+                        );
+                      },
+                    ),
                   ),
                 ),
               )
@@ -121,7 +165,11 @@ class _YahooImageSearchScreen extends StatelessWidget {
     );
   }
 
-  void _showPhotoBrowser(BuildContext context, List<String> photos, int initialIndex,) {
+  void _showPhotoBrowser(
+    BuildContext context,
+    List<String> photos,
+    int initialIndex,
+  ) {
     showGeneralDialog(
       context: context,
       barrierDismissible: true,

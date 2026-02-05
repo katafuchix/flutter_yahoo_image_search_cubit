@@ -6,6 +6,8 @@ import 'package:flutter_yahoo_image_search_cubit/repository/image_repository.dar
 import 'package:flutter_yahoo_image_search_cubit/ui/yahoo_image_search_cubit.dart';
 import 'package:flutter_yahoo_image_search_cubit/ui/yahoo_image_search_state.dart';
 
+// flutter test test/ui/yahoo_image_search_cubit_test.dart
+
 // リポジトリのモックを作成
 class MockImageRepository extends Mock implements ImageRepository {}
 
@@ -24,7 +26,8 @@ void main() {
 
   group('YahooImageSearchCubit', () {
     test('初期状態が正しいこと', () {
-      expect(cubit.state, const YahooImageSearchState());
+      expect(cubit.state,
+          const YahooImageSearchState.initial(SearchContext(word: '')));
     });
 
     blocTest<YahooImageSearchCubit, YahooImageSearchState>(
@@ -32,7 +35,7 @@ void main() {
       build: () => cubit,
       act: (cubit) => cubit.setSearchWord('ねこ'),
       expect: () => [
-        const YahooImageSearchState(searchWord: 'ねこ'),
+        const YahooImageSearchState.initial(SearchContext(word: 'ねこ')),
       ],
     );
 
@@ -40,8 +43,8 @@ void main() {
       '検索成功時：Loading状態を経て、結果が格納されること',
       build: () {
         // リポジトリが結果を返すように設定
-        when(() => mockRepository.fetchImages('Flutter'))
-            .thenAnswer((_) async => [ImageResult(url: 'https://test.com/1.jpg')]);
+        when(() => mockRepository.fetchImages('Flutter')).thenAnswer(
+            (_) async => [ImageResult(url: 'https://test.com/1.jpg')]);
         return cubit;
       },
       act: (cubit) async {
@@ -50,13 +53,15 @@ void main() {
       },
       // 状態の遷移を順番に検証
       expect: () => [
-        const YahooImageSearchState(searchWord: 'Flutter'), // Wordセット
-        const YahooImageSearchState(searchWord: 'Flutter', isLoading: true), // 検索開始
-        YahooImageSearchState(
-          searchWord: 'Flutter',
-          isLoading: false,
+        const YahooImageSearchState.initial(SearchContext(word: 'Flutter')),
+        // 文字入力
+        const YahooImageSearchState.loading(SearchContext(word: 'Flutter')),
+        // 検索開始（Loadingに遷移）
+        YahooImageSearchState.success(
           results: [ImageResult(url: 'https://test.com/1.jpg')],
-        ), // 完了
+          context: const SearchContext(word: 'Flutter'),
+        ),
+        // 成功
       ],
     );
 
@@ -72,12 +77,11 @@ void main() {
         await cubit.search();
       },
       expect: () => [
-        const YahooImageSearchState(searchWord: 'ErrorWord'),
-        const YahooImageSearchState(searchWord: 'ErrorWord', isLoading: true),
-        const YahooImageSearchState(
-          searchWord: 'ErrorWord',
-          isLoading: false,
-          error: 'Exception: Network Error',
+        const YahooImageSearchState.initial(SearchContext(word: 'ErrorWord')),
+        const YahooImageSearchState.loading(SearchContext(word: 'ErrorWord')),
+        const YahooImageSearchState.error(
+          message: 'Exception: Network Error',
+          context: SearchContext(word: 'ErrorWord'),
         ),
       ],
     );
@@ -90,8 +94,8 @@ void main() {
         await cubit.search();
       },
       expect: () => [
-        const YahooImageSearchState(searchWord: 'ab'),
-        // searchを呼んでも isLoading: true の状態は流れてこないはず
+        const YahooImageSearchState.initial(SearchContext(word: 'ab')),
+        // searchを呼んでも Loading 状態は emit されない
       ],
       verify: (_) {
         // リポジトリが呼ばれていないことを確認
