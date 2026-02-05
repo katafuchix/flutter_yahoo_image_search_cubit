@@ -5,6 +5,7 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
 }
 
+//  "$HOME/Library/Android/sdk/cmdline-tools/latest/bin/sdkmanager" "ndk;26.1.10909125"
 android {
     ndkVersion = "26.1.10909125"
     namespace = "com.example.flutter_yahoo_image_search_cubit"
