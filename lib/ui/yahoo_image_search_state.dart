@@ -38,3 +38,19 @@ class YahooImageSearchState with _$YahooImageSearchState {
     required String message,
   }) = YahooImageSearchError;
 }
+
+/*
+@freezed
+class YahooImageSearchState with _$YahooImageSearchState {
+  const factory YahooImageSearchState({
+    // 画面全体のメイン状態（Idle, Loading, Success, Error）
+    @Default(ScreenIdle()) ScreenState screen,
+
+    // ダイアログ専用の状態（Idle, Loading, Success, Error）
+    @Default(DialogIdle()) DialogState dialog,
+
+    // 共通データ（検索ワードなど）
+    required SearchContext context,
+  }) = _YahooImageSearchState;
+}
+ */
