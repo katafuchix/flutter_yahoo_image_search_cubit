@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'package:bloc_test/bloc_test.dart';
+import 'package:flutter_yahoo_image_search_cubit/repository/favorite_repository.dart';
 import 'package:flutter_yahoo_image_search_cubit/service/gallery_service.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:http/http.dart' as http;
@@ -18,6 +19,8 @@ class MockImageRepository extends Mock implements ImageRepository {}
 
 class MockGalleryService extends Mock implements GalleryService {}
 
+class MockFavoriteRepository extends Mock implements FavoriteRepository {}
+
 void main() {
   // 儀式：Fallbackの登録
   setUpAll(() {
@@ -29,14 +32,20 @@ void main() {
   late MockImageRepository mockRepository;
   late MockClient mockClient;
   late MockGalleryService mockGallery;
+  late MockFavoriteRepository mockFavoriteRepository;
 
   setUp(() {
     mockRepository = MockImageRepository();
     mockGallery = MockGalleryService();
     mockClient = MockClient();
+    mockFavoriteRepository = MockFavoriteRepository();
+
     // CubitにHttpClientを注入できるように改造している前提
-    cubit = YahooImageSearchCubit(mockRepository, mockGallery,
-        httpClient: mockClient);
+    cubit = YahooImageSearchCubit(
+        mockRepository,
+        mockGallery,
+        httpClient: mockClient,
+        mockFavoriteRepository);
   });
 
   // これを追加！
@@ -193,6 +202,23 @@ void main() {
           .having((s) => s.dialog, 'dialog', isA<DialogError>()),
       isA<YahooImageSearchState>()
           .having((s) => s.dialog, 'dialog', const DialogState.idle()),
+    ],
+  );
+
+  blocTest<YahooImageSearchCubit, YahooImageSearchState>(
+    'お気に入り追加時に state.favoriteUrls が更新されること',
+    build: () {
+      // toggle後に取得されるリストをシミュレート
+      when(() => mockFavoriteRepository.toggleFavorite(any()))
+          .thenAnswer((_) async => {});
+      when(() => mockFavoriteRepository.getFavorites())
+          .thenAnswer((_) async => ['https://test.com/1.jpg']);
+      return cubit;
+    },
+    act: (cubit) => cubit.toggleFavorite('https://test.com/1.jpg'),
+    expect: () => [
+      isA<YahooImageSearchState>().having(
+          (s) => s.favoriteUrls, 'URLが追加されている', ['https://test.com/1.jpg']),
     ],
   );
   /*
