@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$YahooImageSearchState {
   ScreenState get screen => throw _privateConstructorUsedError;
   DialogState get dialog => throw _privateConstructorUsedError;
+  List<String> get favoriteUrls => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $YahooImageSearchStateCopyWith<YahooImageSearchState> get copyWith =>
@@ -30,7 +31,8 @@ abstract class $YahooImageSearchStateCopyWith<$Res> {
           $Res Function(YahooImageSearchState) then) =
       _$YahooImageSearchStateCopyWithImpl<$Res, YahooImageSearchState>;
   @useResult
-  $Res call({ScreenState screen, DialogState dialog});
+  $Res call(
+      {ScreenState screen, DialogState dialog, List<String> favoriteUrls});
 
   $ScreenStateCopyWith<$Res> get screen;
   $DialogStateCopyWith<$Res> get dialog;
@@ -52,6 +54,7 @@ class _$YahooImageSearchStateCopyWithImpl<$Res,
   $Res call({
     Object? screen = null,
     Object? dialog = null,
+    Object? favoriteUrls = null,
   }) {
     return _then(_value.copyWith(
       screen: null == screen
@@ -62,6 +65,10 @@ class _$YahooImageSearchStateCopyWithImpl<$Res,
           ? _value.dialog
           : dialog // ignore: cast_nullable_to_non_nullable
               as DialogState,
+      favoriteUrls: null == favoriteUrls
+          ? _value.favoriteUrls
+          : favoriteUrls // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ) as $Val);
   }
 
@@ -91,7 +98,8 @@ abstract class _$$YahooImageSearchStateImplCopyWith<$Res>
       __$$YahooImageSearchStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({ScreenState screen, DialogState dialog});
+  $Res call(
+      {ScreenState screen, DialogState dialog, List<String> favoriteUrls});
 
   @override
   $ScreenStateCopyWith<$Res> get screen;
@@ -113,6 +121,7 @@ class __$$YahooImageSearchStateImplCopyWithImpl<$Res>
   $Res call({
     Object? screen = null,
     Object? dialog = null,
+    Object? favoriteUrls = null,
   }) {
     return _then(_$YahooImageSearchStateImpl(
       screen: null == screen
@@ -123,6 +132,10 @@ class __$$YahooImageSearchStateImplCopyWithImpl<$Res>
           ? _value.dialog
           : dialog // ignore: cast_nullable_to_non_nullable
               as DialogState,
+      favoriteUrls: null == favoriteUrls
+          ? _value._favoriteUrls
+          : favoriteUrls // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -132,7 +145,9 @@ class __$$YahooImageSearchStateImplCopyWithImpl<$Res>
 class _$YahooImageSearchStateImpl implements _YahooImageSearchState {
   const _$YahooImageSearchStateImpl(
       {this.screen = const ScreenState.initial(''),
-      this.dialog = const DialogState.idle()});
+      this.dialog = const DialogState.idle(),
+      final List<String> favoriteUrls = const []})
+      : _favoriteUrls = favoriteUrls;
 
   @override
   @JsonKey()
@@ -140,10 +155,18 @@ class _$YahooImageSearchStateImpl implements _YahooImageSearchState {
   @override
   @JsonKey()
   final DialogState dialog;
+  final List<String> _favoriteUrls;
+  @override
+  @JsonKey()
+  List<String> get favoriteUrls {
+    if (_favoriteUrls is EqualUnmodifiableListView) return _favoriteUrls;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_favoriteUrls);
+  }
 
   @override
   String toString() {
-    return 'YahooImageSearchState(screen: $screen, dialog: $dialog)';
+    return 'YahooImageSearchState(screen: $screen, dialog: $dialog, favoriteUrls: $favoriteUrls)';
   }
 
   @override
@@ -152,11 +175,14 @@ class _$YahooImageSearchStateImpl implements _YahooImageSearchState {
         (other.runtimeType == runtimeType &&
             other is _$YahooImageSearchStateImpl &&
             (identical(other.screen, screen) || other.screen == screen) &&
-            (identical(other.dialog, dialog) || other.dialog == dialog));
+            (identical(other.dialog, dialog) || other.dialog == dialog) &&
+            const DeepCollectionEquality()
+                .equals(other._favoriteUrls, _favoriteUrls));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, screen, dialog);
+  int get hashCode => Object.hash(runtimeType, screen, dialog,
+      const DeepCollectionEquality().hash(_favoriteUrls));
 
   @JsonKey(ignore: true)
   @override
@@ -169,12 +195,15 @@ class _$YahooImageSearchStateImpl implements _YahooImageSearchState {
 abstract class _YahooImageSearchState implements YahooImageSearchState {
   const factory _YahooImageSearchState(
       {final ScreenState screen,
-      final DialogState dialog}) = _$YahooImageSearchStateImpl;
+      final DialogState dialog,
+      final List<String> favoriteUrls}) = _$YahooImageSearchStateImpl;
 
   @override
   ScreenState get screen;
   @override
   DialogState get dialog;
+  @override
+  List<String> get favoriteUrls;
   @override
   @JsonKey(ignore: true)
   _$$YahooImageSearchStateImplCopyWith<_$YahooImageSearchStateImpl>

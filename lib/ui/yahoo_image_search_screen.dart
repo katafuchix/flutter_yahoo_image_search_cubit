@@ -2,7 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:go_router/go_router.dart';
 import '../repository/image_repository_impl.dart';
+import '../repository/favorite_repository_impl.dart';
 import '../service/gallery_service.dart';
 import 'components/photo_browser.dart';
 import 'yahoo_image_search_cubit.dart';
@@ -15,8 +17,8 @@ class YahooImageSearchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // BlocProvider で Cubit を生成・注入
     return BlocProvider(
-      create: (_) =>
-          YahooImageSearchCubit(ImageRepositoryImpl(Dio()), GalleryService()),
+      create: (_) => YahooImageSearchCubit(ImageRepositoryImpl(Dio()),
+          GalleryService(), FavoriteRepositoryImpl()),
       child: const _YahooImageSearchScreen(),
     );
   }
@@ -31,7 +33,19 @@ class _YahooImageSearchScreen extends StatelessWidget {
         onTap: () => FocusScope.of(context).unfocus(),
         // 2. タップでフォーカスを外す（キーボードが下がる）
         child: Scaffold(
-          appBar: AppBar(title: const Text('Yahoo Image Search')),
+          //appBar: AppBar(title: const Text('Yahoo Image Search')),
+          appBar: AppBar(
+            title: const Text('Yahoo Image Search'),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.favorite),
+                onPressed: () {
+                  // GoRouterでの遷移（Swiftの pushViewController 的な動作）
+                  context.push('/favorites');
+                },
+              ),
+            ],
+          ),
           // BlocConsumer で状態の監視とダイアログの制御を両立
           body: BlocConsumer<YahooImageSearchCubit, YahooImageSearchState>(
             listener: (context, state) {
@@ -161,16 +175,65 @@ class _YahooImageSearchScreen extends StatelessWidget {
                           itemCount: results.length,
                           itemBuilder: (context, index) {
                             final imageUrl = results[index].url;
+                            // その画像がお気に入りに入っているか判定
+                            final isFavorite =
+                                state.favoriteUrls.contains(imageUrl);
+
                             return GestureDetector(
-                              onTap: () => _showPhotoBrowser(
-                                context,
-                                results.map((e) => e.url).toList(),
-                                index,
-                              ),
-                              // 長押しで保存機能を呼び出す例
-                              onLongPress: () => cubit.downloadImage(imageUrl),
-                              child: Image.network(imageUrl, fit: BoxFit.cover),
-                            );
+                                onTap: () => _showPhotoBrowser(
+                                      context,
+                                      results.map((e) => e.url).toList(),
+                                      index,
+                                    ),
+                                // 長押しで保存機能を呼び出す例
+                                onLongPress: () =>
+                                    cubit.downloadImage(imageUrl),
+                                child: Stack(
+                                  children: [
+                                    // 1. 下層：画像（全体に広げる）
+                                    Positioned.fill(
+                                      child: Image.network(imageUrl,
+                                          fit: BoxFit.cover),
+                                    ),
+                                    // 2. 上層：お気に入りボタン
+                                    Positioned(
+                                      top: 4, // 右上の端から少し離す
+                                      right: 4,
+                                      child: Container(
+                                        decoration: const BoxDecoration(
+                                          color: Colors.black26,
+                                          // ボタンを見やすくするために少し暗くする
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: IconButton(
+                                          icon: Icon(
+                                            isFavorite
+                                                ? Icons.favorite
+                                                : Icons.favorite_border,
+                                            color: isFavorite
+                                                ? Colors.black
+                                                : Colors.white,
+                                          ),
+                                          onPressed: () async {
+                                            await cubit
+                                                .toggleFavorite(imageUrl);
+                                            // SmartDialog や SnackBar で通知すると Swift っぽくて良いですね
+                                            if (!context.mounted) return;
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                  content: isFavorite
+                                                      ? Text('お気に入りから削除しました')
+                                                      : Text('お気に入りに追加しました'),
+                                                  duration:
+                                                      Duration(seconds: 1)),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ));
                           },
                         ),
                       ),

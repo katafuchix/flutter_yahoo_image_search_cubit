@@ -11,6 +11,7 @@ class YahooImageSearchState with _$YahooImageSearchState {
   const factory YahooImageSearchState({
     @Default(ScreenState.initial('')) ScreenState screen,
     @Default(DialogState.idle()) DialogState dialog,
+    @Default([]) List<String> favoriteUrls,
   }) = _YahooImageSearchState;
 }
 

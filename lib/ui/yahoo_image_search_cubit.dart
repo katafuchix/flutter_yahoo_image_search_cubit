@@ -1,20 +1,21 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
-import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'dart:typed_data';
 import '../../repository/image_repository.dart';
+import '../../repository/favorite_repository.dart';
 import 'yahoo_image_search_state.dart';
 import '../../service/gallery_service.dart';
 
 class YahooImageSearchCubit extends Cubit<YahooImageSearchState> {
   final ImageRepository _repository;
   final GalleryService _galleryService;
+  final FavoriteRepository _favoriteRepository;
   final http.Client _httpClient;
 
   // 初期状態をセットして起動
   YahooImageSearchCubit(
     this._repository,
-    this._galleryService, {
+    this._galleryService,
+    this._favoriteRepository, {
     http.Client? httpClient,
   } // テスト用に任意で受け取れるようにする
       )  : _httpClient = httpClient ?? http.Client(),
@@ -22,7 +23,10 @@ class YahooImageSearchCubit extends Cubit<YahooImageSearchState> {
           // 初期状態：Screenはinitial、Dialogはidle
           screen: ScreenState.initial(''),
           dialog: DialogState.idle(),
-        ));
+        )) {
+    // 起動時に自動でお気に入りリストを取得
+    fetchFavorites();
+  }
 
   // ボタンの判定もStateから取れる
   bool get isSearchButtonEnabled => state.screen.word.length >= 3;
@@ -74,8 +78,6 @@ class YahooImageSearchCubit extends Cubit<YahooImageSearchState> {
       final response = await _httpClient.get(Uri.parse(url));
       if (response.statusCode != 200) throw Exception('画像の取得に失敗しました');
 
-      final Uint8List bytes = response.bodyBytes;
-
       // 3. ギャラリー保存処理（実際にはライブラリを呼ぶ）
       // ★ 直接ライブラリを呼ばず、注入されたサービスを使う
       await _galleryService.save(response.bodyBytes);
@@ -95,5 +97,23 @@ class YahooImageSearchCubit extends Cubit<YahooImageSearchState> {
       await Future.delayed(const Duration(seconds: 2));
       emit(state.copyWith(dialog: const DialogState.idle()));
     }
+  }
+
+  // yahoo_image_search_cubit.dart
+
+  // 1. 初期化時（あるいはコンストラクタで）に今のリストを読み込む
+  Future<void> fetchFavorites() async {
+    final urls = await _favoriteRepository.getFavorites();
+    emit(state.copyWith(favoriteUrls: urls));
+  }
+
+  // 2. toggleFavorite を修正
+  // お気に入りボタンが押された時の処理
+  Future<void> toggleFavorite(String url) async {
+    await _favoriteRepository.toggleFavorite(url);
+
+    // 最新のリストを取得して State を更新
+    final updatedUrls = await _favoriteRepository.getFavorites();
+    emit(state.copyWith(favoriteUrls: updatedUrls));
   }
 }

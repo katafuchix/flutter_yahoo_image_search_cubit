@@ -4,8 +4,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
+import 'core/router.dart';
 import 'network/network_activity_notifier.dart';
-import 'ui/yahoo_image_search_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,9 +17,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    //return MaterialApp(
+    return MaterialApp.router(
       builder: FlutterSmartDialog.init(),
-      navigatorObservers: [FlutterSmartDialog.observer],
+      //navigatorObservers: [FlutterSmartDialog.observer],   // GoRouter へ
       title: 'Flutter Demo',
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
@@ -38,11 +39,11 @@ class MyApp extends StatelessWidget {
         useMaterial3: false,
       ),
       scaffoldMessengerKey: GlobalSnackBar.scaffoldMessengerKey,
-      home: const YahooImageSearchScreen(),
+      //home: const YahooImageSearchScreen(),
+      routerConfig: router, // ここで定義した地図を渡す
     );
   }
 }
-
 
 class _AppWrapper extends ConsumerStatefulWidget {
   final Widget child;
@@ -65,7 +66,7 @@ class _AppWrapperState extends ConsumerState<_AppWrapper> {
 
     ref.listen<AsyncValue<List<ConnectivityResult>>>(
       networkActivityNotifierProvider,
-          (previous, next) {
+      (previous, next) {
         final notifier = ref.read(networkActivityNotifierProvider.notifier);
 
         if (notifier.isOffline) {
