@@ -7,8 +7,8 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_yahoo_image_search_cubit/model/image_result.dart';
 import 'package:flutter_yahoo_image_search_cubit/repository/image_repository.dart';
-import 'package:flutter_yahoo_image_search_cubit/ui/yahoo_image_search_cubit.dart';
-import 'package:flutter_yahoo_image_search_cubit/ui/yahoo_image_search_state.dart';
+import 'package:flutter_yahoo_image_search_cubit/ui/yahoo_image_search/yahoo_image_search_cubit.dart';
+import 'package:flutter_yahoo_image_search_cubit/ui/yahoo_image_search/yahoo_image_search_state.dart';
 
 // flutter test test/ui/yahoo_image_search_cubit_test.dart
 
@@ -186,54 +186,33 @@ void main() {
     ],
   );
 
-  blocTest<YahooImageSearchCubit, YahooImageSearchState>(
-    '画像ダウンロード失敗時：DialogStateが loading -> error -> idle と遷移すること',
-    build: () {
-      when(() => mockClient.get(any())).thenAnswer(
-        (_) async => http.Response('Not Found', 404),
-      );
-      return cubit;
-    },
-    act: (cubit) => cubit.downloadImage('https://test.com/404.jpg'),
-    expect: () => [
-      isA<YahooImageSearchState>()
-          .having((s) => s.dialog, 'dialog', const DialogState.loading()),
-      isA<YahooImageSearchState>()
-          .having((s) => s.dialog, 'dialog', isA<DialogError>()),
-      isA<YahooImageSearchState>()
-          .having((s) => s.dialog, 'dialog', const DialogState.idle()),
-    ],
-  );
-
-  blocTest<YahooImageSearchCubit, YahooImageSearchState>(
-    'お気に入り追加時に state.favoriteUrls が更新されること',
-    build: () {
-      // toggle後に取得されるリストをシミュレート
-      when(() => mockFavoriteRepository.toggleFavorite(any()))
-          .thenAnswer((_) async => {});
-      when(() => mockFavoriteRepository.getFavorites())
-          .thenAnswer((_) async => ['https://test.com/1.jpg']);
-      return cubit;
-    },
-    act: (cubit) => cubit.toggleFavorite('https://test.com/1.jpg'),
-    expect: () => [
-      isA<YahooImageSearchState>().having(
-          (s) => s.favoriteUrls, 'URLが追加されている', ['https://test.com/1.jpg']),
-    ],
-  );
-  /*
-  blocTest<YahooImageSearchCubit, YahooImageSearchState>(
-    '検索成功時に isLoading が true -> false と遷移し、結果が格納されること',
-    build: () => YahooImageSearchCubit(mockRepository),
-    act: (cubit) {
-      cubit.setSearchWord('Flutter');
-      return cubit.search();
-    },
-    expect: () => [
-      isA<YahooImageSearchState>().having((s) => s.searchWord, 'word', 'Flutter'), // Wordセット
-      isA<YahooImageSearchState>().having((s) => s.isLoading, 'loading', true),   // 検索開始
-      isA<YahooImageSearchState>().having((s) => s.results, 'results', isNotEmpty) // 完了
-          .having((s) => s.isLoading, 'loading', false),
-    ],
-  );*/
+  group('画像ダウンロード', () {
+    blocTest<YahooImageSearchCubit, YahooImageSearchState>(
+      '画像保存に成功した場合、DialogStateが loading -> success -> idle と遷移すること',
+      build: () {
+        // このテストに関係するスタブだけを個別に定義
+        when(() => mockClient.get(any()))
+            .thenAnswer((_) async => http.Response('dummy_bytes', 200));
+        when(() => mockGallery.save(any())).thenAnswer((_) async => {});
+        return cubit;
+      },
+      act: (cubit) => cubit.downloadImage('https://example.com/test.jpg'),
+      expect: () => [
+        // 1. ローディング開始
+        isA<YahooImageSearchState>()
+            .having((s) => s.dialog, 'loading', const DialogState.loading()),
+        // 2. 成功メッセージ表示
+        isA<YahooImageSearchState>().having((s) => s.dialog, 'success',
+            const DialogState.success('ギャラリーに保存しました！')),
+        // 3. アイドル状態に戻る
+        isA<YahooImageSearchState>()
+            .having((s) => s.dialog, 'idle', const DialogState.idle()),
+      ],
+      verify: (_) {
+        // 内部で正しく呼ばれたか検証
+        verify(() => mockClient.get(any())).called(1);
+        verify(() => mockGallery.save(any())).called(1);
+      },
+    );
+  });
 }

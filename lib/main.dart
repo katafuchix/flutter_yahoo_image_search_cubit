@@ -1,14 +1,51 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
 import 'core/router.dart';
 import 'network/network_activity_notifier.dart';
+import 'repository/favorite_repository_impl.dart';
+import 'repository/image_repository_impl.dart';
+import 'service/gallery_service.dart';
+import 'ui/favorite/favorite_cubit.dart';
+import 'ui/yahoo_image_search/yahoo_image_search_cubit.dart';
 
 void main() {
-  runApp(const MyApp());
+  // 1. Dioのインスタンスを1つだけ作る（Swiftの URLSession.shared 的な扱い）
+  // ここでタイムアウトやベースURLを一括管理できる
+  final dio = Dio(BaseOptions(
+    connectTimeout: const Duration(seconds: 10),
+    receiveTimeout: const Duration(seconds: 10),
+  ));
+
+  // 2. 作った dio をリポジトリに注入する（Dependency Injection）
+  final imageRepo = ImageRepositoryImpl(dio);
+  final favoriteRepo = FavoriteRepositoryImpl();
+  final galleryService = GalleryService();
+
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        // アプリ全体で共有するお気に入り管理
+        BlocProvider(
+          create: (_) => FavoriteCubit(favoriteRepo)..load(),
+        ),
+        // 検索画面用のCubit（必要なリポジトリをすべて渡す）
+        BlocProvider(
+          create: (_) => YahooImageSearchCubit(
+            imageRepo,
+            galleryService,
+            favoriteRepo,
+          ),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

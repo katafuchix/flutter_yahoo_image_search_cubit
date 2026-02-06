@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import '../../model/image_result.dart';
+import '../../../model/image_result.dart';
 
 part 'yahoo_image_search_state.freezed.dart';
 

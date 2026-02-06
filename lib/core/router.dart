@@ -1,7 +1,7 @@
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:go_router/go_router.dart';
-import '../ui/yahoo_image_search_screen.dart';
-import '../ui/favorite_screen.dart'; // これから作る画面
+import '../ui/yahoo_image_search/yahoo_image_search_screen.dart';
+import '../ui/favorite/favorite_screen.dart'; // これから作る画面
 
 final router = GoRouter(
   initialLocation: '/',

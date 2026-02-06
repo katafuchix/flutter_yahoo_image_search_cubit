@@ -1,9 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
-import '../../repository/image_repository.dart';
-import '../../repository/favorite_repository.dart';
+import '../../../repository/image_repository.dart';
+import '../../../repository/favorite_repository.dart';
 import 'yahoo_image_search_state.dart';
-import '../../service/gallery_service.dart';
+import '../../../service/gallery_service.dart';
 
 class YahooImageSearchCubit extends Cubit<YahooImageSearchState> {
   final ImageRepository _repository;
@@ -23,10 +23,7 @@ class YahooImageSearchCubit extends Cubit<YahooImageSearchState> {
           // 初期状態：Screenはinitial、Dialogはidle
           screen: ScreenState.initial(''),
           dialog: DialogState.idle(),
-        )) {
-    // 起動時に自動でお気に入りリストを取得
-    fetchFavorites();
-  }
+        ));
 
   // ボタンの判定もStateから取れる
   bool get isSearchButtonEnabled => state.screen.word.length >= 3;
@@ -99,21 +96,19 @@ class YahooImageSearchCubit extends Cubit<YahooImageSearchState> {
     }
   }
 
-  // yahoo_image_search_cubit.dart
-
-  // 1. 初期化時（あるいはコンストラクタで）に今のリストを読み込む
-  Future<void> fetchFavorites() async {
-    final urls = await _favoriteRepository.getFavorites();
-    emit(state.copyWith(favoriteUrls: urls));
+// お気に入り操作（リポジトリを叩くだけ。状態の更新は FavoriteCubit が担当する）
+  Future<void> toggleFavorite(String url) async {
+    try {
+      await _favoriteRepository.toggleFavorite(url);
+      // ここで自分の state を emit する必要はありません。
+      // FavoriteCubit が Repository の変更を検知、または UI が通知を受けて再描画されます。
+    } catch (e) {
+      emit(state.copyWith(dialog: const DialogState.error('お気に入り操作に失敗しました')));
+    }
   }
 
-  // 2. toggleFavorite を修正
-  // お気に入りボタンが押された時の処理
-  Future<void> toggleFavorite(String url) async {
-    await _favoriteRepository.toggleFavorite(url);
-
-    // 最新のリストを取得して State を更新
-    final updatedUrls = await _favoriteRepository.getFavorites();
-    emit(state.copyWith(favoriteUrls: updatedUrls));
+  // ダイアログ状態のリセット
+  void resetDialog() {
+    emit(state.copyWith(dialog: const DialogState.idle()));
   }
 }
