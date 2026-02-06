@@ -4,6 +4,8 @@ import '../../../model/image_result.dart';
 part 'yahoo_image_search_state.freezed.dart';
 
 // flutter pub run build_runner build --delete-conflicting-outputs
+// fvm dart run build_runner build --delete-conflicting-outputs
+
 // Union形式（Sealed Class）
 
 @freezed
@@ -12,6 +14,7 @@ class YahooImageSearchState with _$YahooImageSearchState {
     @Default(ScreenState.initial('')) ScreenState screen,
     @Default(DialogState.idle()) DialogState dialog,
     @Default([]) List<String> favoriteUrls,
+    @Default(1) int currentPage,
   }) = _YahooImageSearchState;
 }
 
@@ -21,9 +24,16 @@ sealed class ScreenState with _$ScreenState {
 
   const factory ScreenState.loading(String word) = ScreenLoading;
 
+  // 【重要】現在の結果を表示しつつ、下でクルクル回すための状態
+  const factory ScreenState.loadingMore({
+    required List<ImageResult> results,
+    required String word,
+  }) = ScreenLoadingMore;
+
   const factory ScreenState.success({
     required List<ImageResult> results,
     required String word,
+    @Default(true) bool hasNext, // 次のページがあるか
   }) = ScreenSuccess;
 
   const factory ScreenState.error({

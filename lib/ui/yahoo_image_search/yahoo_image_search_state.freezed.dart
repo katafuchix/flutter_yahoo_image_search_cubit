@@ -19,8 +19,11 @@ mixin _$YahooImageSearchState {
   ScreenState get screen => throw _privateConstructorUsedError;
   DialogState get dialog => throw _privateConstructorUsedError;
   List<String> get favoriteUrls => throw _privateConstructorUsedError;
+  int get currentPage => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of YahooImageSearchState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $YahooImageSearchStateCopyWith<YahooImageSearchState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -32,7 +35,10 @@ abstract class $YahooImageSearchStateCopyWith<$Res> {
       _$YahooImageSearchStateCopyWithImpl<$Res, YahooImageSearchState>;
   @useResult
   $Res call(
-      {ScreenState screen, DialogState dialog, List<String> favoriteUrls});
+      {ScreenState screen,
+      DialogState dialog,
+      List<String> favoriteUrls,
+      int currentPage});
 
   $ScreenStateCopyWith<$Res> get screen;
   $DialogStateCopyWith<$Res> get dialog;
@@ -49,12 +55,15 @@ class _$YahooImageSearchStateCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of YahooImageSearchState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? screen = null,
     Object? dialog = null,
     Object? favoriteUrls = null,
+    Object? currentPage = null,
   }) {
     return _then(_value.copyWith(
       screen: null == screen
@@ -69,9 +78,15 @@ class _$YahooImageSearchStateCopyWithImpl<$Res,
           ? _value.favoriteUrls
           : favoriteUrls // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      currentPage: null == currentPage
+          ? _value.currentPage
+          : currentPage // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 
+  /// Create a copy of YahooImageSearchState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $ScreenStateCopyWith<$Res> get screen {
@@ -80,6 +95,8 @@ class _$YahooImageSearchStateCopyWithImpl<$Res,
     });
   }
 
+  /// Create a copy of YahooImageSearchState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $DialogStateCopyWith<$Res> get dialog {
@@ -99,7 +116,10 @@ abstract class _$$YahooImageSearchStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {ScreenState screen, DialogState dialog, List<String> favoriteUrls});
+      {ScreenState screen,
+      DialogState dialog,
+      List<String> favoriteUrls,
+      int currentPage});
 
   @override
   $ScreenStateCopyWith<$Res> get screen;
@@ -116,12 +136,15 @@ class __$$YahooImageSearchStateImplCopyWithImpl<$Res>
       $Res Function(_$YahooImageSearchStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of YahooImageSearchState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? screen = null,
     Object? dialog = null,
     Object? favoriteUrls = null,
+    Object? currentPage = null,
   }) {
     return _then(_$YahooImageSearchStateImpl(
       screen: null == screen
@@ -136,6 +159,10 @@ class __$$YahooImageSearchStateImplCopyWithImpl<$Res>
           ? _value._favoriteUrls
           : favoriteUrls // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      currentPage: null == currentPage
+          ? _value.currentPage
+          : currentPage // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -146,7 +173,8 @@ class _$YahooImageSearchStateImpl implements _YahooImageSearchState {
   const _$YahooImageSearchStateImpl(
       {this.screen = const ScreenState.initial(''),
       this.dialog = const DialogState.idle(),
-      final List<String> favoriteUrls = const []})
+      final List<String> favoriteUrls = const [],
+      this.currentPage = 1})
       : _favoriteUrls = favoriteUrls;
 
   @override
@@ -165,8 +193,12 @@ class _$YahooImageSearchStateImpl implements _YahooImageSearchState {
   }
 
   @override
+  @JsonKey()
+  final int currentPage;
+
+  @override
   String toString() {
-    return 'YahooImageSearchState(screen: $screen, dialog: $dialog, favoriteUrls: $favoriteUrls)';
+    return 'YahooImageSearchState(screen: $screen, dialog: $dialog, favoriteUrls: $favoriteUrls, currentPage: $currentPage)';
   }
 
   @override
@@ -177,14 +209,18 @@ class _$YahooImageSearchStateImpl implements _YahooImageSearchState {
             (identical(other.screen, screen) || other.screen == screen) &&
             (identical(other.dialog, dialog) || other.dialog == dialog) &&
             const DeepCollectionEquality()
-                .equals(other._favoriteUrls, _favoriteUrls));
+                .equals(other._favoriteUrls, _favoriteUrls) &&
+            (identical(other.currentPage, currentPage) ||
+                other.currentPage == currentPage));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, screen, dialog,
-      const DeepCollectionEquality().hash(_favoriteUrls));
+      const DeepCollectionEquality().hash(_favoriteUrls), currentPage);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of YahooImageSearchState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$YahooImageSearchStateImplCopyWith<_$YahooImageSearchStateImpl>
@@ -196,7 +232,8 @@ abstract class _YahooImageSearchState implements YahooImageSearchState {
   const factory _YahooImageSearchState(
       {final ScreenState screen,
       final DialogState dialog,
-      final List<String> favoriteUrls}) = _$YahooImageSearchStateImpl;
+      final List<String> favoriteUrls,
+      final int currentPage}) = _$YahooImageSearchStateImpl;
 
   @override
   ScreenState get screen;
@@ -205,7 +242,12 @@ abstract class _YahooImageSearchState implements YahooImageSearchState {
   @override
   List<String> get favoriteUrls;
   @override
-  @JsonKey(ignore: true)
+  int get currentPage;
+
+  /// Create a copy of YahooImageSearchState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$YahooImageSearchStateImplCopyWith<_$YahooImageSearchStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -217,7 +259,11 @@ mixin _$ScreenState {
   TResult when<TResult extends Object?>({
     required TResult Function(String word) initial,
     required TResult Function(String word) loading,
-    required TResult Function(List<ImageResult> results, String word) success,
+    required TResult Function(List<ImageResult> results, String word)
+        loadingMore,
+    required TResult Function(
+            List<ImageResult> results, String word, bool hasNext)
+        success,
     required TResult Function(String message, String word) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -225,7 +271,9 @@ mixin _$ScreenState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String word)? initial,
     TResult? Function(String word)? loading,
-    TResult? Function(List<ImageResult> results, String word)? success,
+    TResult? Function(List<ImageResult> results, String word)? loadingMore,
+    TResult? Function(List<ImageResult> results, String word, bool hasNext)?
+        success,
     TResult? Function(String message, String word)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -233,7 +281,9 @@ mixin _$ScreenState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String word)? initial,
     TResult Function(String word)? loading,
-    TResult Function(List<ImageResult> results, String word)? success,
+    TResult Function(List<ImageResult> results, String word)? loadingMore,
+    TResult Function(List<ImageResult> results, String word, bool hasNext)?
+        success,
     TResult Function(String message, String word)? error,
     required TResult orElse(),
   }) =>
@@ -242,6 +292,7 @@ mixin _$ScreenState {
   TResult map<TResult extends Object?>({
     required TResult Function(ScreenInitial value) initial,
     required TResult Function(ScreenLoading value) loading,
+    required TResult Function(ScreenLoadingMore value) loadingMore,
     required TResult Function(ScreenSuccess value) success,
     required TResult Function(ScreenError value) error,
   }) =>
@@ -250,6 +301,7 @@ mixin _$ScreenState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(ScreenInitial value)? initial,
     TResult? Function(ScreenLoading value)? loading,
+    TResult? Function(ScreenLoadingMore value)? loadingMore,
     TResult? Function(ScreenSuccess value)? success,
     TResult? Function(ScreenError value)? error,
   }) =>
@@ -258,13 +310,16 @@ mixin _$ScreenState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ScreenInitial value)? initial,
     TResult Function(ScreenLoading value)? loading,
+    TResult Function(ScreenLoadingMore value)? loadingMore,
     TResult Function(ScreenSuccess value)? success,
     TResult Function(ScreenError value)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ScreenState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ScreenStateCopyWith<ScreenState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -288,6 +343,8 @@ class _$ScreenStateCopyWithImpl<$Res, $Val extends ScreenState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ScreenState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -321,6 +378,8 @@ class __$$ScreenInitialImplCopyWithImpl<$Res>
       _$ScreenInitialImpl _value, $Res Function(_$ScreenInitialImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ScreenState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -359,7 +418,9 @@ class _$ScreenInitialImpl implements ScreenInitial {
   @override
   int get hashCode => Object.hash(runtimeType, word);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ScreenState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ScreenInitialImplCopyWith<_$ScreenInitialImpl> get copyWith =>
@@ -370,7 +431,11 @@ class _$ScreenInitialImpl implements ScreenInitial {
   TResult when<TResult extends Object?>({
     required TResult Function(String word) initial,
     required TResult Function(String word) loading,
-    required TResult Function(List<ImageResult> results, String word) success,
+    required TResult Function(List<ImageResult> results, String word)
+        loadingMore,
+    required TResult Function(
+            List<ImageResult> results, String word, bool hasNext)
+        success,
     required TResult Function(String message, String word) error,
   }) {
     return initial(word);
@@ -381,7 +446,9 @@ class _$ScreenInitialImpl implements ScreenInitial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String word)? initial,
     TResult? Function(String word)? loading,
-    TResult? Function(List<ImageResult> results, String word)? success,
+    TResult? Function(List<ImageResult> results, String word)? loadingMore,
+    TResult? Function(List<ImageResult> results, String word, bool hasNext)?
+        success,
     TResult? Function(String message, String word)? error,
   }) {
     return initial?.call(word);
@@ -392,7 +459,9 @@ class _$ScreenInitialImpl implements ScreenInitial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String word)? initial,
     TResult Function(String word)? loading,
-    TResult Function(List<ImageResult> results, String word)? success,
+    TResult Function(List<ImageResult> results, String word)? loadingMore,
+    TResult Function(List<ImageResult> results, String word, bool hasNext)?
+        success,
     TResult Function(String message, String word)? error,
     required TResult orElse(),
   }) {
@@ -407,6 +476,7 @@ class _$ScreenInitialImpl implements ScreenInitial {
   TResult map<TResult extends Object?>({
     required TResult Function(ScreenInitial value) initial,
     required TResult Function(ScreenLoading value) loading,
+    required TResult Function(ScreenLoadingMore value) loadingMore,
     required TResult Function(ScreenSuccess value) success,
     required TResult Function(ScreenError value) error,
   }) {
@@ -418,6 +488,7 @@ class _$ScreenInitialImpl implements ScreenInitial {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(ScreenInitial value)? initial,
     TResult? Function(ScreenLoading value)? loading,
+    TResult? Function(ScreenLoadingMore value)? loadingMore,
     TResult? Function(ScreenSuccess value)? success,
     TResult? Function(ScreenError value)? error,
   }) {
@@ -429,6 +500,7 @@ class _$ScreenInitialImpl implements ScreenInitial {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ScreenInitial value)? initial,
     TResult Function(ScreenLoading value)? loading,
+    TResult Function(ScreenLoadingMore value)? loadingMore,
     TResult Function(ScreenSuccess value)? success,
     TResult Function(ScreenError value)? error,
     required TResult orElse(),
@@ -445,8 +517,11 @@ abstract class ScreenInitial implements ScreenState {
 
   @override
   String get word;
+
+  /// Create a copy of ScreenState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ScreenInitialImplCopyWith<_$ScreenInitialImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -470,6 +545,8 @@ class __$$ScreenLoadingImplCopyWithImpl<$Res>
       _$ScreenLoadingImpl _value, $Res Function(_$ScreenLoadingImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ScreenState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -508,7 +585,9 @@ class _$ScreenLoadingImpl implements ScreenLoading {
   @override
   int get hashCode => Object.hash(runtimeType, word);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ScreenState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ScreenLoadingImplCopyWith<_$ScreenLoadingImpl> get copyWith =>
@@ -519,7 +598,11 @@ class _$ScreenLoadingImpl implements ScreenLoading {
   TResult when<TResult extends Object?>({
     required TResult Function(String word) initial,
     required TResult Function(String word) loading,
-    required TResult Function(List<ImageResult> results, String word) success,
+    required TResult Function(List<ImageResult> results, String word)
+        loadingMore,
+    required TResult Function(
+            List<ImageResult> results, String word, bool hasNext)
+        success,
     required TResult Function(String message, String word) error,
   }) {
     return loading(word);
@@ -530,7 +613,9 @@ class _$ScreenLoadingImpl implements ScreenLoading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String word)? initial,
     TResult? Function(String word)? loading,
-    TResult? Function(List<ImageResult> results, String word)? success,
+    TResult? Function(List<ImageResult> results, String word)? loadingMore,
+    TResult? Function(List<ImageResult> results, String word, bool hasNext)?
+        success,
     TResult? Function(String message, String word)? error,
   }) {
     return loading?.call(word);
@@ -541,7 +626,9 @@ class _$ScreenLoadingImpl implements ScreenLoading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String word)? initial,
     TResult Function(String word)? loading,
-    TResult Function(List<ImageResult> results, String word)? success,
+    TResult Function(List<ImageResult> results, String word)? loadingMore,
+    TResult Function(List<ImageResult> results, String word, bool hasNext)?
+        success,
     TResult Function(String message, String word)? error,
     required TResult orElse(),
   }) {
@@ -556,6 +643,7 @@ class _$ScreenLoadingImpl implements ScreenLoading {
   TResult map<TResult extends Object?>({
     required TResult Function(ScreenInitial value) initial,
     required TResult Function(ScreenLoading value) loading,
+    required TResult Function(ScreenLoadingMore value) loadingMore,
     required TResult Function(ScreenSuccess value) success,
     required TResult Function(ScreenError value) error,
   }) {
@@ -567,6 +655,7 @@ class _$ScreenLoadingImpl implements ScreenLoading {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(ScreenInitial value)? initial,
     TResult? Function(ScreenLoading value)? loading,
+    TResult? Function(ScreenLoadingMore value)? loadingMore,
     TResult? Function(ScreenSuccess value)? success,
     TResult? Function(ScreenError value)? error,
   }) {
@@ -578,6 +667,7 @@ class _$ScreenLoadingImpl implements ScreenLoading {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ScreenInitial value)? initial,
     TResult Function(ScreenLoading value)? loading,
+    TResult Function(ScreenLoadingMore value)? loadingMore,
     TResult Function(ScreenSuccess value)? success,
     TResult Function(ScreenError value)? error,
     required TResult orElse(),
@@ -594,38 +684,43 @@ abstract class ScreenLoading implements ScreenState {
 
   @override
   String get word;
+
+  /// Create a copy of ScreenState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ScreenLoadingImplCopyWith<_$ScreenLoadingImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$ScreenSuccessImplCopyWith<$Res>
+abstract class _$$ScreenLoadingMoreImplCopyWith<$Res>
     implements $ScreenStateCopyWith<$Res> {
-  factory _$$ScreenSuccessImplCopyWith(
-          _$ScreenSuccessImpl value, $Res Function(_$ScreenSuccessImpl) then) =
-      __$$ScreenSuccessImplCopyWithImpl<$Res>;
+  factory _$$ScreenLoadingMoreImplCopyWith(_$ScreenLoadingMoreImpl value,
+          $Res Function(_$ScreenLoadingMoreImpl) then) =
+      __$$ScreenLoadingMoreImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({List<ImageResult> results, String word});
 }
 
 /// @nodoc
-class __$$ScreenSuccessImplCopyWithImpl<$Res>
-    extends _$ScreenStateCopyWithImpl<$Res, _$ScreenSuccessImpl>
-    implements _$$ScreenSuccessImplCopyWith<$Res> {
-  __$$ScreenSuccessImplCopyWithImpl(
-      _$ScreenSuccessImpl _value, $Res Function(_$ScreenSuccessImpl) _then)
+class __$$ScreenLoadingMoreImplCopyWithImpl<$Res>
+    extends _$ScreenStateCopyWithImpl<$Res, _$ScreenLoadingMoreImpl>
+    implements _$$ScreenLoadingMoreImplCopyWith<$Res> {
+  __$$ScreenLoadingMoreImplCopyWithImpl(_$ScreenLoadingMoreImpl _value,
+      $Res Function(_$ScreenLoadingMoreImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ScreenState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? results = null,
     Object? word = null,
   }) {
-    return _then(_$ScreenSuccessImpl(
+    return _then(_$ScreenLoadingMoreImpl(
       results: null == results
           ? _value._results
           : results // ignore: cast_nullable_to_non_nullable
@@ -640,8 +735,8 @@ class __$$ScreenSuccessImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ScreenSuccessImpl implements ScreenSuccess {
-  const _$ScreenSuccessImpl(
+class _$ScreenLoadingMoreImpl implements ScreenLoadingMore {
+  const _$ScreenLoadingMoreImpl(
       {required final List<ImageResult> results, required this.word})
       : _results = results;
 
@@ -658,14 +753,14 @@ class _$ScreenSuccessImpl implements ScreenSuccess {
 
   @override
   String toString() {
-    return 'ScreenState.success(results: $results, word: $word)';
+    return 'ScreenState.loadingMore(results: $results, word: $word)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ScreenSuccessImpl &&
+            other is _$ScreenLoadingMoreImpl &&
             const DeepCollectionEquality().equals(other._results, _results) &&
             (identical(other.word, word) || other.word == word));
   }
@@ -674,7 +769,208 @@ class _$ScreenSuccessImpl implements ScreenSuccess {
   int get hashCode => Object.hash(
       runtimeType, const DeepCollectionEquality().hash(_results), word);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ScreenState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ScreenLoadingMoreImplCopyWith<_$ScreenLoadingMoreImpl> get copyWith =>
+      __$$ScreenLoadingMoreImplCopyWithImpl<_$ScreenLoadingMoreImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String word) initial,
+    required TResult Function(String word) loading,
+    required TResult Function(List<ImageResult> results, String word)
+        loadingMore,
+    required TResult Function(
+            List<ImageResult> results, String word, bool hasNext)
+        success,
+    required TResult Function(String message, String word) error,
+  }) {
+    return loadingMore(results, word);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String word)? initial,
+    TResult? Function(String word)? loading,
+    TResult? Function(List<ImageResult> results, String word)? loadingMore,
+    TResult? Function(List<ImageResult> results, String word, bool hasNext)?
+        success,
+    TResult? Function(String message, String word)? error,
+  }) {
+    return loadingMore?.call(results, word);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String word)? initial,
+    TResult Function(String word)? loading,
+    TResult Function(List<ImageResult> results, String word)? loadingMore,
+    TResult Function(List<ImageResult> results, String word, bool hasNext)?
+        success,
+    TResult Function(String message, String word)? error,
+    required TResult orElse(),
+  }) {
+    if (loadingMore != null) {
+      return loadingMore(results, word);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ScreenInitial value) initial,
+    required TResult Function(ScreenLoading value) loading,
+    required TResult Function(ScreenLoadingMore value) loadingMore,
+    required TResult Function(ScreenSuccess value) success,
+    required TResult Function(ScreenError value) error,
+  }) {
+    return loadingMore(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ScreenInitial value)? initial,
+    TResult? Function(ScreenLoading value)? loading,
+    TResult? Function(ScreenLoadingMore value)? loadingMore,
+    TResult? Function(ScreenSuccess value)? success,
+    TResult? Function(ScreenError value)? error,
+  }) {
+    return loadingMore?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ScreenInitial value)? initial,
+    TResult Function(ScreenLoading value)? loading,
+    TResult Function(ScreenLoadingMore value)? loadingMore,
+    TResult Function(ScreenSuccess value)? success,
+    TResult Function(ScreenError value)? error,
+    required TResult orElse(),
+  }) {
+    if (loadingMore != null) {
+      return loadingMore(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ScreenLoadingMore implements ScreenState {
+  const factory ScreenLoadingMore(
+      {required final List<ImageResult> results,
+      required final String word}) = _$ScreenLoadingMoreImpl;
+
+  List<ImageResult> get results;
+  @override
+  String get word;
+
+  /// Create a copy of ScreenState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ScreenLoadingMoreImplCopyWith<_$ScreenLoadingMoreImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$ScreenSuccessImplCopyWith<$Res>
+    implements $ScreenStateCopyWith<$Res> {
+  factory _$$ScreenSuccessImplCopyWith(
+          _$ScreenSuccessImpl value, $Res Function(_$ScreenSuccessImpl) then) =
+      __$$ScreenSuccessImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({List<ImageResult> results, String word, bool hasNext});
+}
+
+/// @nodoc
+class __$$ScreenSuccessImplCopyWithImpl<$Res>
+    extends _$ScreenStateCopyWithImpl<$Res, _$ScreenSuccessImpl>
+    implements _$$ScreenSuccessImplCopyWith<$Res> {
+  __$$ScreenSuccessImplCopyWithImpl(
+      _$ScreenSuccessImpl _value, $Res Function(_$ScreenSuccessImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ScreenState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? results = null,
+    Object? word = null,
+    Object? hasNext = null,
+  }) {
+    return _then(_$ScreenSuccessImpl(
+      results: null == results
+          ? _value._results
+          : results // ignore: cast_nullable_to_non_nullable
+              as List<ImageResult>,
+      word: null == word
+          ? _value.word
+          : word // ignore: cast_nullable_to_non_nullable
+              as String,
+      hasNext: null == hasNext
+          ? _value.hasNext
+          : hasNext // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ScreenSuccessImpl implements ScreenSuccess {
+  const _$ScreenSuccessImpl(
+      {required final List<ImageResult> results,
+      required this.word,
+      this.hasNext = true})
+      : _results = results;
+
+  final List<ImageResult> _results;
+  @override
+  List<ImageResult> get results {
+    if (_results is EqualUnmodifiableListView) return _results;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_results);
+  }
+
+  @override
+  final String word;
+  @override
+  @JsonKey()
+  final bool hasNext;
+
+  @override
+  String toString() {
+    return 'ScreenState.success(results: $results, word: $word, hasNext: $hasNext)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ScreenSuccessImpl &&
+            const DeepCollectionEquality().equals(other._results, _results) &&
+            (identical(other.word, word) || other.word == word) &&
+            (identical(other.hasNext, hasNext) || other.hasNext == hasNext));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_results), word, hasNext);
+
+  /// Create a copy of ScreenState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ScreenSuccessImplCopyWith<_$ScreenSuccessImpl> get copyWith =>
@@ -685,10 +981,14 @@ class _$ScreenSuccessImpl implements ScreenSuccess {
   TResult when<TResult extends Object?>({
     required TResult Function(String word) initial,
     required TResult Function(String word) loading,
-    required TResult Function(List<ImageResult> results, String word) success,
+    required TResult Function(List<ImageResult> results, String word)
+        loadingMore,
+    required TResult Function(
+            List<ImageResult> results, String word, bool hasNext)
+        success,
     required TResult Function(String message, String word) error,
   }) {
-    return success(results, word);
+    return success(results, word, hasNext);
   }
 
   @override
@@ -696,10 +996,12 @@ class _$ScreenSuccessImpl implements ScreenSuccess {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String word)? initial,
     TResult? Function(String word)? loading,
-    TResult? Function(List<ImageResult> results, String word)? success,
+    TResult? Function(List<ImageResult> results, String word)? loadingMore,
+    TResult? Function(List<ImageResult> results, String word, bool hasNext)?
+        success,
     TResult? Function(String message, String word)? error,
   }) {
-    return success?.call(results, word);
+    return success?.call(results, word, hasNext);
   }
 
   @override
@@ -707,12 +1009,14 @@ class _$ScreenSuccessImpl implements ScreenSuccess {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String word)? initial,
     TResult Function(String word)? loading,
-    TResult Function(List<ImageResult> results, String word)? success,
+    TResult Function(List<ImageResult> results, String word)? loadingMore,
+    TResult Function(List<ImageResult> results, String word, bool hasNext)?
+        success,
     TResult Function(String message, String word)? error,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(results, word);
+      return success(results, word, hasNext);
     }
     return orElse();
   }
@@ -722,6 +1026,7 @@ class _$ScreenSuccessImpl implements ScreenSuccess {
   TResult map<TResult extends Object?>({
     required TResult Function(ScreenInitial value) initial,
     required TResult Function(ScreenLoading value) loading,
+    required TResult Function(ScreenLoadingMore value) loadingMore,
     required TResult Function(ScreenSuccess value) success,
     required TResult Function(ScreenError value) error,
   }) {
@@ -733,6 +1038,7 @@ class _$ScreenSuccessImpl implements ScreenSuccess {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(ScreenInitial value)? initial,
     TResult? Function(ScreenLoading value)? loading,
+    TResult? Function(ScreenLoadingMore value)? loadingMore,
     TResult? Function(ScreenSuccess value)? success,
     TResult? Function(ScreenError value)? error,
   }) {
@@ -744,6 +1050,7 @@ class _$ScreenSuccessImpl implements ScreenSuccess {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ScreenInitial value)? initial,
     TResult Function(ScreenLoading value)? loading,
+    TResult Function(ScreenLoadingMore value)? loadingMore,
     TResult Function(ScreenSuccess value)? success,
     TResult Function(ScreenError value)? error,
     required TResult orElse(),
@@ -758,13 +1065,18 @@ class _$ScreenSuccessImpl implements ScreenSuccess {
 abstract class ScreenSuccess implements ScreenState {
   const factory ScreenSuccess(
       {required final List<ImageResult> results,
-      required final String word}) = _$ScreenSuccessImpl;
+      required final String word,
+      final bool hasNext}) = _$ScreenSuccessImpl;
 
   List<ImageResult> get results;
   @override
   String get word;
+  bool get hasNext;
+
+  /// Create a copy of ScreenState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ScreenSuccessImplCopyWith<_$ScreenSuccessImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -788,6 +1100,8 @@ class __$$ScreenErrorImplCopyWithImpl<$Res>
       _$ScreenErrorImpl _value, $Res Function(_$ScreenErrorImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ScreenState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -834,7 +1148,9 @@ class _$ScreenErrorImpl implements ScreenError {
   @override
   int get hashCode => Object.hash(runtimeType, message, word);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ScreenState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ScreenErrorImplCopyWith<_$ScreenErrorImpl> get copyWith =>
@@ -845,7 +1161,11 @@ class _$ScreenErrorImpl implements ScreenError {
   TResult when<TResult extends Object?>({
     required TResult Function(String word) initial,
     required TResult Function(String word) loading,
-    required TResult Function(List<ImageResult> results, String word) success,
+    required TResult Function(List<ImageResult> results, String word)
+        loadingMore,
+    required TResult Function(
+            List<ImageResult> results, String word, bool hasNext)
+        success,
     required TResult Function(String message, String word) error,
   }) {
     return error(message, word);
@@ -856,7 +1176,9 @@ class _$ScreenErrorImpl implements ScreenError {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String word)? initial,
     TResult? Function(String word)? loading,
-    TResult? Function(List<ImageResult> results, String word)? success,
+    TResult? Function(List<ImageResult> results, String word)? loadingMore,
+    TResult? Function(List<ImageResult> results, String word, bool hasNext)?
+        success,
     TResult? Function(String message, String word)? error,
   }) {
     return error?.call(message, word);
@@ -867,7 +1189,9 @@ class _$ScreenErrorImpl implements ScreenError {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String word)? initial,
     TResult Function(String word)? loading,
-    TResult Function(List<ImageResult> results, String word)? success,
+    TResult Function(List<ImageResult> results, String word)? loadingMore,
+    TResult Function(List<ImageResult> results, String word, bool hasNext)?
+        success,
     TResult Function(String message, String word)? error,
     required TResult orElse(),
   }) {
@@ -882,6 +1206,7 @@ class _$ScreenErrorImpl implements ScreenError {
   TResult map<TResult extends Object?>({
     required TResult Function(ScreenInitial value) initial,
     required TResult Function(ScreenLoading value) loading,
+    required TResult Function(ScreenLoadingMore value) loadingMore,
     required TResult Function(ScreenSuccess value) success,
     required TResult Function(ScreenError value) error,
   }) {
@@ -893,6 +1218,7 @@ class _$ScreenErrorImpl implements ScreenError {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(ScreenInitial value)? initial,
     TResult? Function(ScreenLoading value)? loading,
+    TResult? Function(ScreenLoadingMore value)? loadingMore,
     TResult? Function(ScreenSuccess value)? success,
     TResult? Function(ScreenError value)? error,
   }) {
@@ -904,6 +1230,7 @@ class _$ScreenErrorImpl implements ScreenError {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ScreenInitial value)? initial,
     TResult Function(ScreenLoading value)? loading,
+    TResult Function(ScreenLoadingMore value)? loadingMore,
     TResult Function(ScreenSuccess value)? success,
     TResult Function(ScreenError value)? error,
     required TResult orElse(),
@@ -923,8 +1250,11 @@ abstract class ScreenError implements ScreenState {
   String get message;
   @override
   String get word;
+
+  /// Create a copy of ScreenState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ScreenErrorImplCopyWith<_$ScreenErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -999,6 +1329,9 @@ class _$DialogStateCopyWithImpl<$Res, $Val extends DialogState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of DialogState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1015,6 +1348,9 @@ class __$$DialogIdleImplCopyWithImpl<$Res>
   __$$DialogIdleImplCopyWithImpl(
       _$DialogIdleImpl _value, $Res Function(_$DialogIdleImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of DialogState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1129,6 +1465,9 @@ class __$$DialogLoadingImplCopyWithImpl<$Res>
   __$$DialogLoadingImplCopyWithImpl(
       _$DialogLoadingImpl _value, $Res Function(_$DialogLoadingImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of DialogState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1246,6 +1585,8 @@ class __$$DialogSuccessImplCopyWithImpl<$Res>
       _$DialogSuccessImpl _value, $Res Function(_$DialogSuccessImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of DialogState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1284,7 +1625,9 @@ class _$DialogSuccessImpl implements DialogSuccess {
   @override
   int get hashCode => Object.hash(runtimeType, message);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DialogState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DialogSuccessImplCopyWith<_$DialogSuccessImpl> get copyWith =>
@@ -1369,7 +1712,10 @@ abstract class DialogSuccess implements DialogState {
   const factory DialogSuccess(final String message) = _$DialogSuccessImpl;
 
   String get message;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of DialogState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DialogSuccessImplCopyWith<_$DialogSuccessImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1391,6 +1737,8 @@ class __$$DialogErrorImplCopyWithImpl<$Res>
       _$DialogErrorImpl _value, $Res Function(_$DialogErrorImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of DialogState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1429,7 +1777,9 @@ class _$DialogErrorImpl implements DialogError {
   @override
   int get hashCode => Object.hash(runtimeType, message);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DialogState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DialogErrorImplCopyWith<_$DialogErrorImpl> get copyWith =>
@@ -1514,7 +1864,10 @@ abstract class DialogError implements DialogState {
   const factory DialogError(final String message) = _$DialogErrorImpl;
 
   String get message;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of DialogState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DialogErrorImplCopyWith<_$DialogErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

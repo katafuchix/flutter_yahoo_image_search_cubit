@@ -44,10 +44,13 @@ class YahooImageSearchCubit extends Cubit<YahooImageSearchState> {
 
     // Loading状態へ（検索ワードを引き継ぐ）
     // 画面（screen）だけをロード中に変更
-    emit(state.copyWith(screen: ScreenState.loading(currentWord)));
+    emit(state.copyWith(
+        currentPage: 1, screen: ScreenState.loading(currentWord)));
 
     try {
-      final results = await _repository.fetchImages(currentWord);
+      final results = await _repository.fetchImages(
+        searchWord: currentWord,
+      );
 
       if (results.isEmpty) {
         emit(state.copyWith(
@@ -55,13 +58,50 @@ class YahooImageSearchCubit extends Cubit<YahooImageSearchState> {
         ));
       } else {
         emit(state.copyWith(
-          screen: ScreenState.success(results: results, word: currentWord),
+          screen: ScreenState.success(
+              results: results, word: currentWord, hasNext: results.isNotEmpty),
         ));
       }
     } catch (e) {
       emit(state.copyWith(
         screen: ScreenState.error(message: e.toString(), word: currentWord),
       ));
+    }
+  }
+
+  // 追加：次ページ読み込み
+  Future<void> loadNextPage() async {
+    // すでに読み込み中、または成功状態以外なら無視
+    final currentScreen = state.screen;
+    if (currentScreen is! ScreenSuccess || !currentScreen.hasNext) return;
+
+    final previousResults = currentScreen.results;
+    final _currentWord = currentScreen.word;
+
+    // 状態を「次ページ読み込み中」に変更（今あるリストを保持したまま）
+    emit(state.copyWith(
+      screen:
+          ScreenState.loadingMore(results: previousResults, word: _currentWord),
+    ));
+
+    try {
+      final nextPage = state.currentPage + 1; // 状態から計算
+      final newResults = await _repository.fetchImages(
+          searchWord: _currentWord, page: nextPage);
+
+      emit(state.copyWith(
+        currentPage: nextPage, // 成功したらページを更新
+        screen: ScreenState.success(
+          results: [...previousResults, ...newResults], // Swiftの array + array
+          word: _currentWord,
+          hasNext: newResults.isNotEmpty, // 取得件数が空なら次はなし
+        ),
+      ));
+    } catch (e) {
+      // エラーでも前のリストは消さずにSuccessに戻す（またはエラー通知）
+      emit(state.copyWith(
+          screen: ScreenState.success(
+              results: previousResults, word: _currentWord)));
     }
   }
 

@@ -85,8 +85,9 @@ void main() {
       '検索成功時：Loading状態を経て、結果が格納されること',
       build: () {
         // リポジトリが結果を返すように設定
-        when(() => mockRepository.fetchImages('Flutter')).thenAnswer(
-            (_) async => [ImageResult(url: 'https://test.com/1.jpg')]);
+        when(() => mockRepository.fetchImages(searchWord: 'Flutter'))
+            .thenAnswer(
+                (_) async => [ImageResult(url: 'https://test.com/1.jpg')]);
         return cubit;
       },
       act: (cubit) async {
@@ -113,9 +114,70 @@ void main() {
     );
 
     blocTest<YahooImageSearchCubit, YahooImageSearchState>(
+      '正常系：次ページを読み込んだ際、既存のリストに新しい結果が追加され、pageが更新されること',
+      build: () {
+        // 1. 最初に1ページ目の成功状態をモックにセットしておく必要があるため、
+        // 念のため repository の挙動を定義
+        when(() => mockRepository.fetchImages(searchWord: "こねこ", page: 2))
+            .thenAnswer((_) async => [
+                  ImageResult(url: 'https://test.com/3.jpg'),
+                  ImageResult(url: 'https://test.com/4.jpg')
+                ]); // 2ページ目の結果
+
+        return cubit;
+      },
+      // テストを開始する前に、1ページ目が成功している状態をシミュレート
+      seed: () => YahooImageSearchState(
+        currentPage: 1,
+        screen: ScreenState.success(
+          results: [
+            ImageResult(url: 'https://test.com/1.jpg'),
+            ImageResult(url: 'https://test.com/2.jpg')
+          ], // 1ページ目の結果
+          word: 'こねこ',
+          hasNext: true,
+        ),
+      ),
+      act: (cubit) => cubit.loadNextPage(),
+      expect: () => [
+        // 1. まず loadingMore 状態になる（結果は保持したまま）
+        isA<YahooImageSearchState>().having(
+          (s) => s.screen,
+          'screen is loadingMore',
+          ScreenState.loadingMore(results: [
+            ImageResult(url: 'https://test.com/1.jpg'),
+            ImageResult(url: 'https://test.com/2.jpg')
+          ], word: 'こねこ'),
+        ),
+        // 2. 次に success 状態になり、リストが合体し、page が 2 になる
+        isA<YahooImageSearchState>()
+            .having((s) => s.currentPage, 'page is 2', 2)
+            .having(
+              (s) => s.screen,
+              'screen is success with combined results',
+              ScreenState.success(
+                results: [
+                  ImageResult(url: 'https://test.com/1.jpg'),
+                  ImageResult(url: 'https://test.com/2.jpg'),
+                  ImageResult(url: 'https://test.com/3.jpg'),
+                  ImageResult(url: 'https://test.com/4.jpg')
+                ], // リストが合体！
+                word: 'こねこ',
+                hasNext: true,
+              ),
+            ),
+      ],
+      verify: (_) {
+        // ちゃんと page: 2 で repository が呼ばれたか確認
+        verify(() => mockRepository.fetchImages(searchWord: 'こねこ', page: 2))
+            .called(1);
+      },
+    );
+
+    blocTest<YahooImageSearchCubit, YahooImageSearchState>(
       '検索失敗時：Loading状態を経て、エラーメッセージが格納されること',
       build: () {
-        when(() => mockRepository.fetchImages('ErrorWord'))
+        when(() => mockRepository.fetchImages(searchWord: 'ErrorWord'))
             .thenThrow(Exception('Network Error'));
         return cubit;
       },
@@ -151,7 +213,7 @@ void main() {
       ],
       verify: (_) {
         // リポジトリが呼ばれていないことを確認
-        verifyNever(() => mockRepository.fetchImages(any()));
+        verifyNever(() => mockRepository.fetchImages(searchWord: ""));
       },
     );
   });

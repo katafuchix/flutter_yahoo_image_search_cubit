@@ -1,29 +1,34 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:go_router/go_router.dart';
-import '../../repository/image_repository_impl.dart';
-import '../../repository/favorite_repository_impl.dart';
-import '../../service/gallery_service.dart';
+import '../../model/image_result.dart';
 import '../components/photo_browser.dart';
 import '../favorite/favorite_cubit.dart';
 import 'yahoo_image_search_cubit.dart';
 import 'yahoo_image_search_state.dart';
 
-class YahooImageSearchScreen extends StatelessWidget {
+class YahooImageSearchScreen extends StatefulWidget {
   const YahooImageSearchScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    // 【重要】BlocProvider は main.dart に移動したため、ここでは const _YahooImageSearchScreen() を返すだけにします。
-    // もし個別に生成したい場合はここでも良いですが、アプリ全体で共有する場合は main.dart で Provider を置いてください。
-    return const _YahooImageSearchScreen();
-  }
+  State<YahooImageSearchScreen> createState() => _YahooImageSearchScreenState();
 }
 
-class _YahooImageSearchScreen extends StatelessWidget {
-  const _YahooImageSearchScreen();
+class _YahooImageSearchScreenState extends State<YahooImageSearchScreen> {
+  final FocusNode _focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.canRequestFocus = false;
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,24 +74,19 @@ class _YahooImageSearchScreen extends StatelessWidget {
           actions: [
             IconButton(
               icon: const Icon(Icons.favorite),
-              onPressed: () => context.push('/favorites'),
+              onPressed: () {
+                context.push('/favorites');
+              },
             ),
           ],
         ),
         body: GestureDetector(
+          behavior: HitTestBehavior.opaque,
           onTap: () => FocusScope.of(context).unfocus(),
           child: Builder(
             builder: (context) {
               // 【重要】ここで2つの Cubit を同時に「購読」します
               final searchState = context.watch<YahooImageSearchCubit>().state;
-
-              // FavoriteCubit の success 状態にあるリストだけを監視
-              final favoriteUrls = context.select<FavoriteCubit, List<String>>(
-                (favCubit) => favCubit.state.maybeWhen(
-                  success: (urls) => urls,
-                  orElse: () => [],
-                ),
-              );
 
               final cubit = context.read<YahooImageSearchCubit>();
 
@@ -97,6 +97,15 @@ class _YahooImageSearchScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         TextField(
+                          focusNode: _focusNode,
+                          onTap: () {
+                            setState(() => _focusNode.canRequestFocus = true);
+                            _focusNode.requestFocus();
+                          },
+                          onTapOutside: (_) {
+                            _focusNode.unfocus();
+                            setState(() => _focusNode.canRequestFocus = false);
+                          },
                           onChanged: (value) => cubit.setSearchWord(value),
                           decoration: const InputDecoration(
                             labelText: '検索キーワード',
@@ -126,84 +135,131 @@ class _YahooImageSearchScreen extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                      child: searchState.screen.when(
-                        initial: (_) =>
-                            const Center(child: Text('キーワードを入力してください')),
-                        loading: (_) => const SizedBox.shrink(),
-                        // Listener が Loading を出すので空でOK
-                        error: (message, _) => Center(
-                          child: Text(message,
-                              style: const TextStyle(color: Colors.red)),
-                        ),
-                        success: (results, _) => GridView.builder(
-                          keyboardDismissBehavior:
-                              ScrollViewKeyboardDismissBehavior.onDrag,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            crossAxisSpacing: 8.0,
-                            mainAxisSpacing: 8.0,
-                          ),
-                          itemCount: results.length,
-                          itemBuilder: (context, index) {
-                            final imageUrl = results[index].url;
-                            // FavoriteCubit から取得したリストで判定
-                            final isFavorite = favoriteUrls.contains(imageUrl);
-
-                            return GestureDetector(
-                              onTap: () => _showPhotoBrowser(
-                                context,
-                                results.map((e) => e.url).toList(),
-                                index,
-                              ),
-                              onLongPress: () => cubit.downloadImage(imageUrl),
-                              child: Stack(
-                                children: [
-                                  Positioned.fill(
-                                    child: Image.network(imageUrl,
-                                        fit: BoxFit.cover),
-                                  ),
-                                  Positioned(
-                                    top: 4,
-                                    right: 4,
-                                    child: Container(
-                                      decoration: const BoxDecoration(
-                                        color: Colors.black26,
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: IconButton(
-                                        icon: Icon(
-                                          isFavorite
-                                              ? Icons.favorite
-                                              : Icons.favorite_border,
-                                          color: isFavorite
-                                              ? Colors.red
-                                              : Colors.white,
-                                        ),
-                                        onPressed: () {
-                                          // お気に入りの実体を持つ FavoriteCubit に通知
-                                          context
-                                              .read<FavoriteCubit>()
-                                              .toggleFavorite(imageUrl);
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
+                      child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    child: searchState.screen.when(
+                      initial: (_) =>
+                          const Center(child: Text('キーワードを入力してください')),
+                      loading: (_) => const SizedBox.shrink(),
+                      // Listener が Loading を出すので空でOK
+                      error: (message, _) => Center(
+                        child: Text(message,
+                            style: const TextStyle(color: Colors.red)),
                       ),
+                      // 【ここがポイント】success と loading_more で同じ GridView を呼び出す
+                      success: (results, word, hasNext) =>
+                          _buildGridView(context, results, false),
+                      loadingMore: (results, word) =>
+                          _buildGridView(context, results, true),
                     ),
-                  )
+                  ))
                 ],
               );
             },
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildGridView(
+      BuildContext context, List<ImageResult> results, bool isLoadingMore) {
+    final cubit = context.read<YahooImageSearchCubit>();
+    // FavoriteCubit の success 状態にあるリストだけを監視
+    final favoriteUrls = context.select<FavoriteCubit, List<String>>(
+      (favCubit) => favCubit.state.maybeWhen(
+        success: (urls) => urls,
+        orElse: () => [],
+      ),
+    );
+    return NotificationListener<ScrollNotification>(
+      onNotification: (ScrollNotification scrollInfo) {
+        // スクロールが一番下（の90%くらい）に来たら次を読み込む
+        if (scrollInfo.metrics.pixels >=
+            scrollInfo.metrics.maxScrollExtent * 0.9) {
+          context.read<YahooImageSearchCubit>().loadNextPage();
+        }
+        return true;
+      },
+      child: GridView.builder(
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          crossAxisSpacing: 8.0,
+          mainAxisSpacing: 8.0,
+        ),
+        itemCount: results.length,
+        itemBuilder: (context, index) {
+          if (index < results.length) {
+            // 通常の画像表示
+            final imageUrl = results[index].url;
+            // FavoriteCubit から取得したリストで判定
+            final isFavorite = favoriteUrls.contains(imageUrl);
+
+            return GestureDetector(
+              onTap: () => _showPhotoBrowser(
+                context,
+                results.map((e) => e.url).toList(),
+                index,
+              ),
+              onLongPress: () => cubit.downloadImage(imageUrl),
+              child: Stack(
+                children: [
+                  Positioned.fill(
+                      child: Image.network(
+                    imageUrl,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) {
+                        // ロード完了！画像を表示
+                        return child;
+                      }
+                      // ロード中：中央にインジケーターを表示
+                      return Center(
+                        child: CircularProgressIndicator(
+                          // 進捗率（0.0〜1.0）を出したい場合は value を指定
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                                  loadingProgress.expectedTotalBytes!
+                              : null,
+                        ),
+                      );
+                    },
+                    errorBuilder: (context, error, stackTrace) {
+                      // 読み込み失敗時のバックアップ
+                      return const Icon(Icons.error);
+                    },
+                    fit: BoxFit.cover,
+                  )),
+                  Positioned(
+                    top: 4,
+                    right: 4,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.black26,
+                        shape: BoxShape.circle,
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          isFavorite ? Icons.favorite : Icons.favorite_border,
+                          color: isFavorite ? Colors.red : Colors.white,
+                        ),
+                        onPressed: () {
+                          // お気に入りの実体を持つ FavoriteCubit に通知
+                          context
+                              .read<FavoriteCubit>()
+                              .toggleFavorite(imageUrl);
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          } else {
+            // 一番下のクルクル表示
+            return const Center(child: CircularProgressIndicator());
+          }
+        },
       ),
     );
   }

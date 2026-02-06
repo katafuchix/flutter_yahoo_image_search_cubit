@@ -9,9 +9,12 @@ class ImageRepositoryImpl implements ImageRepository {
   ImageRepositoryImpl(this._dio);
 
   @override
-  Future<List<ImageResult>> fetchImages(String searchWord) async {
+  Future<List<ImageResult>> fetchImages(
+      {required String searchWord, int page = 1}) async {
     final keyword = Uri.encodeComponent(searchWord);
-    final url = "${AppConfig.yahooSearchBaseUrl}?ei=UTF-8&p=$keyword";
+    final start = (page - 1) * 40 + 1;
+    final url =
+        "${AppConfig.yahooSearchBaseUrl}?ei=UTF-8&p=$keyword&&n=40&b=$start";
 
     final response = await _dio.get(url,
         options: Options(headers: {
@@ -22,7 +25,7 @@ class ImageRepositoryImpl implements ImageRepository {
 
     final body = response.data.toString();
     final regex =
-    RegExp(r'(https?)://msp.c.yimg.jp/([A-Z0-9a-z._%+-/]{2,1024}).jpg');
+        RegExp(r'(https?)://msp.c.yimg.jp/([A-Z0-9a-z._%+-/]{2,1024}).jpg');
     final matches = regex.allMatches(body);
 
     // 重複を除去してモデルのリストに変換

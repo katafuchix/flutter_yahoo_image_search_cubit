@@ -84,6 +84,9 @@ class _$FavoriteStateCopyWithImpl<$Res, $Val extends FavoriteState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of FavoriteState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -100,6 +103,9 @@ class __$$FavoriteInitialImplCopyWithImpl<$Res>
   __$$FavoriteInitialImplCopyWithImpl(
       _$FavoriteInitialImpl _value, $Res Function(_$FavoriteInitialImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of FavoriteState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -214,6 +220,9 @@ class __$$FavoriteLoadingImplCopyWithImpl<$Res>
   __$$FavoriteLoadingImplCopyWithImpl(
       _$FavoriteLoadingImpl _value, $Res Function(_$FavoriteLoadingImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of FavoriteState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -331,6 +340,8 @@ class __$$FavoriteSuccessImplCopyWithImpl<$Res>
       _$FavoriteSuccessImpl _value, $Res Function(_$FavoriteSuccessImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of FavoriteState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -377,7 +388,9 @@ class _$FavoriteSuccessImpl implements FavoriteSuccess {
   int get hashCode => Object.hash(
       runtimeType, const DeepCollectionEquality().hash(_favoriteUrls));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of FavoriteState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$FavoriteSuccessImplCopyWith<_$FavoriteSuccessImpl> get copyWith =>
@@ -464,7 +477,10 @@ abstract class FavoriteSuccess implements FavoriteState {
       _$FavoriteSuccessImpl;
 
   List<String> get favoriteUrls;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of FavoriteState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FavoriteSuccessImplCopyWith<_$FavoriteSuccessImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -486,6 +502,8 @@ class __$$FavoriteErrorImplCopyWithImpl<$Res>
       _$FavoriteErrorImpl _value, $Res Function(_$FavoriteErrorImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of FavoriteState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -524,7 +542,9 @@ class _$FavoriteErrorImpl implements FavoriteError {
   @override
   int get hashCode => Object.hash(runtimeType, message);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of FavoriteState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$FavoriteErrorImplCopyWith<_$FavoriteErrorImpl> get copyWith =>
@@ -609,7 +629,10 @@ abstract class FavoriteError implements FavoriteState {
   const factory FavoriteError(final String message) = _$FavoriteErrorImpl;
 
   String get message;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of FavoriteState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FavoriteErrorImplCopyWith<_$FavoriteErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
