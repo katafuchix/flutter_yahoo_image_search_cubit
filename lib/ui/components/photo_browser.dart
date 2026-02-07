@@ -37,7 +37,6 @@ class PhotoBrowser extends StatelessWidget {
               icon: const Icon(Icons.close, color: Colors.white, size: 30),
               onPressed: () {
                 Navigator.of(context).pop();
-                FocusScope.of(context).unfocus();
               },
             ),
           ),

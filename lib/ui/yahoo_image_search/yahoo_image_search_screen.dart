@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -206,29 +207,18 @@ class _YahooImageSearchScreenState extends State<YahooImageSearchScreen> {
               child: Stack(
                 children: [
                   Positioned.fill(
-                      child: Image.network(
-                    imageUrl,
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) {
-                        // ロード完了！画像を表示
-                        return child;
-                      }
-                      // ロード中：中央にインジケーターを表示
-                      return Center(
-                        child: CircularProgressIndicator(
-                          // 進捗率（0.0〜1.0）を出したい場合は value を指定
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                                  loadingProgress.expectedTotalBytes!
-                              : null,
-                        ),
-                      );
-                    },
-                    errorBuilder: (context, error, stackTrace) {
-                      // 読み込み失敗時のバックアップ
-                      return const Icon(Icons.error);
-                    },
+                      child: CachedNetworkImage(
+                    imageUrl: results[index].url,
                     fit: BoxFit.cover,
+                    // ロード中はこの Widget を「出し続ける」
+                    placeholder: (context, url) => Container(
+                      color: Colors.grey[200],
+                      child: const Center(
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      ),
+                    ),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
                   )),
                   Positioned(
                     top: 4,
