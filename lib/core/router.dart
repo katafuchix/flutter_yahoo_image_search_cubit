@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:go_router/go_router.dart';
 import '../ui/yahoo_image_search/yahoo_image_search_screen.dart';
@@ -15,7 +16,14 @@ final router = GoRouter(
     // お気に入り画面
     GoRoute(
       path: '/favorites',
-      builder: (context, state) => const FavoriteScreen(),
+      //builder: (context, state) => const FavoriteScreen(),
+      pageBuilder: (context, state) {
+        // これを使うだけで、OSがiOSなら自動的にあのスライド＋影付きアニメになります
+        return CupertinoPage(
+          key: state.pageKey,
+          child: const FavoriteScreen(),
+        );
+      },
     ),
   ],
 );
