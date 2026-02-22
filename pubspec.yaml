@@ -60,10 +60,10 @@ dependencies:
   bloc_test: ^10.0.0  # Cubitのテスト用
   mocktail: ^1.0.0   # モック作成用
   equatable: ^2.0.5
-  image_gallery_saver: ^2.0.3
   http: ^1.0.0 # 最新バージョンを確認
   go_router: ^17.1.0 # 最新バージョンを確認してください
   cached_network_image: ^3.4.1
+  gal: ^2.3.2
 
 dev_dependencies:
   flutter_test:
