@@ -16,6 +16,22 @@ class YahooImageSearchState with _$YahooImageSearchState {
     @Default([]) List<String> favoriteUrls,
     @Default(1) int currentPage,
   }) = _YahooImageSearchState;
+
+  @override
+  // TODO: implement currentPage
+  int get currentPage => throw UnimplementedError();
+
+  @override
+  // TODO: implement dialog
+  DialogState get dialog => throw UnimplementedError();
+
+  @override
+  // TODO: implement favoriteUrls
+  List<String> get favoriteUrls => throw UnimplementedError();
+
+  @override
+  // TODO: implement screen
+  ScreenState get screen => throw UnimplementedError();
 }
 
 @freezed

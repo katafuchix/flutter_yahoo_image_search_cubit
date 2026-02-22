@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../model/image_result.dart';
 import '../components/photo_browser.dart';
 import '../favorite/favorite_cubit.dart';
+import '../favorite/favorite_state.dart';
 import 'yahoo_image_search_cubit.dart';
 import 'yahoo_image_search_state.dart';
 

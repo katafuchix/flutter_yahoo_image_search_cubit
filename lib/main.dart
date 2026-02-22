@@ -7,7 +7,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
 import 'core/router.dart';
-import 'network/network_activity_notifier.dart';
+
+//import 'network/network_activity_notifier.dart';
+import 'package:flutter_yahoo_image_search_cubit/network/network_activity_notifier.dart';
 import 'repository/favorite_repository_impl.dart';
 import 'repository/image_repository_impl.dart';
 import 'service/gallery_service.dart';
@@ -99,12 +101,14 @@ class _AppWrapperState extends ConsumerState<_AppWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    ref.watch(networkActivityNotifierProvider); // ← これが必要！
+    //ref.watch(networkActivityNotifierProvider); // ← これが必要！
+
+    ref.watch(networkActivityProvider);
 
     ref.listen<AsyncValue<List<ConnectivityResult>>>(
-      networkActivityNotifierProvider,
+      networkActivityProvider,
       (previous, next) {
-        final notifier = ref.read(networkActivityNotifierProvider.notifier);
+        final notifier = ref.read(networkActivityProvider.notifier);
 
         if (notifier.isOffline) {
           GlobalSnackBar.show('オフラインです');
