@@ -1,13 +1,15 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../repository/favorite_repository.dart';
 import 'favorite_state.dart';
 
+@injectable
 class FavoriteCubit extends Cubit<FavoriteState> {
   final FavoriteRepository _favoriteRepository;
 
   FavoriteCubit(this._favoriteRepository)
-      : super(const FavoriteState.initial());
+    : super(const FavoriteState.initial());
 
   Future<void> load() async {
     emit(const FavoriteState.loading());

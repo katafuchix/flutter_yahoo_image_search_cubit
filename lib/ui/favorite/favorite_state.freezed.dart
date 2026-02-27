@@ -11,325 +11,294 @@ part of 'favorite_state.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
-
 /// @nodoc
 mixin _$FavoriteState {
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is FavoriteState);
-  }
 
-  @override
-  int get hashCode => runtimeType.hashCode;
 
-  @override
-  String toString() {
-    return 'FavoriteState()';
-  }
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FavoriteState);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'FavoriteState()';
+}
+
+
 }
 
 /// @nodoc
-class $FavoriteStateCopyWith<$Res> {
-  $FavoriteStateCopyWith(FavoriteState _, $Res Function(FavoriteState) __);
+class $FavoriteStateCopyWith<$Res>  {
+$FavoriteStateCopyWith(FavoriteState _, $Res Function(FavoriteState) __);
 }
+
 
 /// Adds pattern-matching-related methods to [FavoriteState].
 extension FavoriteStatePatterns on FavoriteState {
-  /// A variant of `map` that fallback to returning `orElse`.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case _:
-  ///     return orElse();
-  /// }
-  /// ```
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
 
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(FavoriteInitial value)? initial,
-    TResult Function(FavoriteLoading value)? loading,
-    TResult Function(FavoriteSuccess value)? success,
-    TResult Function(FavoriteError value)? error,
-    required TResult orElse(),
-  }) {
-    final _that = this;
-    switch (_that) {
-      case FavoriteInitial() when initial != null:
-        return initial(_that);
-      case FavoriteLoading() when loading != null:
-        return loading(_that);
-      case FavoriteSuccess() when success != null:
-        return success(_that);
-      case FavoriteError() when error != null:
-        return error(_that);
-      case _:
-        return orElse();
-    }
-  }
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( FavoriteInitial value)?  initial,TResult Function( FavoriteLoading value)?  loading,TResult Function( FavoriteSuccess value)?  success,TResult Function( FavoriteError value)?  error,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case FavoriteInitial() when initial != null:
+return initial(_that);case FavoriteLoading() when loading != null:
+return loading(_that);case FavoriteSuccess() when success != null:
+return success(_that);case FavoriteError() when error != null:
+return error(_that);case _:
+  return orElse();
 
-  /// A `switch`-like method, using callbacks.
-  ///
-  /// Callbacks receives the raw object, upcasted.
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case final Subclass2 value:
-  ///     return ...;
-  /// }
-  /// ```
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
 
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(FavoriteInitial value) initial,
-    required TResult Function(FavoriteLoading value) loading,
-    required TResult Function(FavoriteSuccess value) success,
-    required TResult Function(FavoriteError value) error,
-  }) {
-    final _that = this;
-    switch (_that) {
-      case FavoriteInitial():
-        return initial(_that);
-      case FavoriteLoading():
-        return loading(_that);
-      case FavoriteSuccess():
-        return success(_that);
-      case FavoriteError():
-        return error(_that);
-    }
-  }
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( FavoriteInitial value)  initial,required TResult Function( FavoriteLoading value)  loading,required TResult Function( FavoriteSuccess value)  success,required TResult Function( FavoriteError value)  error,}){
+final _that = this;
+switch (_that) {
+case FavoriteInitial():
+return initial(_that);case FavoriteLoading():
+return loading(_that);case FavoriteSuccess():
+return success(_that);case FavoriteError():
+return error(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
 
-  /// A variant of `map` that fallback to returning `null`.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case _:
-  ///     return null;
-  /// }
-  /// ```
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( FavoriteInitial value)?  initial,TResult? Function( FavoriteLoading value)?  loading,TResult? Function( FavoriteSuccess value)?  success,TResult? Function( FavoriteError value)?  error,}){
+final _that = this;
+switch (_that) {
+case FavoriteInitial() when initial != null:
+return initial(_that);case FavoriteLoading() when loading != null:
+return loading(_that);case FavoriteSuccess() when success != null:
+return success(_that);case FavoriteError() when error != null:
+return error(_that);case _:
+  return null;
 
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(FavoriteInitial value)? initial,
-    TResult? Function(FavoriteLoading value)? loading,
-    TResult? Function(FavoriteSuccess value)? success,
-    TResult? Function(FavoriteError value)? error,
-  }) {
-    final _that = this;
-    switch (_that) {
-      case FavoriteInitial() when initial != null:
-        return initial(_that);
-      case FavoriteLoading() when loading != null:
-        return loading(_that);
-      case FavoriteSuccess() when success != null:
-        return success(_that);
-      case FavoriteError() when error != null:
-        return error(_that);
-      case _:
-        return null;
-    }
-  }
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
 
-  /// A variant of `when` that fallback to an `orElse` callback.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case _:
-  ///     return orElse();
-  /// }
-  /// ```
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( List<String> favoriteUrls)?  success,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case FavoriteInitial() when initial != null:
+return initial();case FavoriteLoading() when loading != null:
+return loading();case FavoriteSuccess() when success != null:
+return success(_that.favoriteUrls);case FavoriteError() when error != null:
+return error(_that.message);case _:
+  return orElse();
 
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(List<String> favoriteUrls)? success,
-    TResult Function(String message)? error,
-    required TResult orElse(),
-  }) {
-    final _that = this;
-    switch (_that) {
-      case FavoriteInitial() when initial != null:
-        return initial();
-      case FavoriteLoading() when loading != null:
-        return loading();
-      case FavoriteSuccess() when success != null:
-        return success(_that.favoriteUrls);
-      case FavoriteError() when error != null:
-        return error(_that.message);
-      case _:
-        return orElse();
-    }
-  }
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
 
-  /// A `switch`-like method, using callbacks.
-  ///
-  /// As opposed to `map`, this offers destructuring.
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case Subclass2(:final field2):
-  ///     return ...;
-  /// }
-  /// ```
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( List<String> favoriteUrls)  success,required TResult Function( String message)  error,}) {final _that = this;
+switch (_that) {
+case FavoriteInitial():
+return initial();case FavoriteLoading():
+return loading();case FavoriteSuccess():
+return success(_that.favoriteUrls);case FavoriteError():
+return error(_that.message);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
 
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(List<String> favoriteUrls) success,
-    required TResult Function(String message) error,
-  }) {
-    final _that = this;
-    switch (_that) {
-      case FavoriteInitial():
-        return initial();
-      case FavoriteLoading():
-        return loading();
-      case FavoriteSuccess():
-        return success(_that.favoriteUrls);
-      case FavoriteError():
-        return error(_that.message);
-    }
-  }
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( List<String> favoriteUrls)?  success,TResult? Function( String message)?  error,}) {final _that = this;
+switch (_that) {
+case FavoriteInitial() when initial != null:
+return initial();case FavoriteLoading() when loading != null:
+return loading();case FavoriteSuccess() when success != null:
+return success(_that.favoriteUrls);case FavoriteError() when error != null:
+return error(_that.message);case _:
+  return null;
 
-  /// A variant of `when` that fallback to returning `null`
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case _:
-  ///     return null;
-  /// }
-  /// ```
+}
+}
 
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(List<String> favoriteUrls)? success,
-    TResult? Function(String message)? error,
-  }) {
-    final _that = this;
-    switch (_that) {
-      case FavoriteInitial() when initial != null:
-        return initial();
-      case FavoriteLoading() when loading != null:
-        return loading();
-      case FavoriteSuccess() when success != null:
-        return success(_that.favoriteUrls);
-      case FavoriteError() when error != null:
-        return error(_that.message);
-      case _:
-        return null;
-    }
-  }
 }
 
 /// @nodoc
+
 
 class FavoriteInitial implements FavoriteState {
   const FavoriteInitial();
+  
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is FavoriteInitial);
-  }
 
-  @override
-  int get hashCode => runtimeType.hashCode;
 
-  @override
-  String toString() {
-    return 'FavoriteState.initial()';
-  }
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FavoriteInitial);
 }
 
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'FavoriteState.initial()';
+}
+
+
+}
+
+
+
+
 /// @nodoc
+
 
 class FavoriteLoading implements FavoriteState {
   const FavoriteLoading();
+  
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is FavoriteLoading);
-  }
 
-  @override
-  int get hashCode => runtimeType.hashCode;
 
-  @override
-  String toString() {
-    return 'FavoriteState.loading()';
-  }
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FavoriteLoading);
 }
 
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'FavoriteState.loading()';
+}
+
+
+}
+
+
+
+
 /// @nodoc
+
 
 class FavoriteSuccess implements FavoriteState {
-  const FavoriteSuccess({required final List<String> favoriteUrls})
-      : _favoriteUrls = favoriteUrls;
+  const FavoriteSuccess({required final  List<String> favoriteUrls}): _favoriteUrls = favoriteUrls;
+  
 
-  final List<String> _favoriteUrls;
-  List<String> get favoriteUrls {
-    if (_favoriteUrls is EqualUnmodifiableListView) return _favoriteUrls;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_favoriteUrls);
-  }
+ final  List<String> _favoriteUrls;
+ List<String> get favoriteUrls {
+  if (_favoriteUrls is EqualUnmodifiableListView) return _favoriteUrls;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_favoriteUrls);
+}
 
-  /// Create a copy of FavoriteState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  $FavoriteSuccessCopyWith<FavoriteSuccess> get copyWith =>
-      _$FavoriteSuccessCopyWithImpl<FavoriteSuccess>(this, _$identity);
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is FavoriteSuccess &&
-            const DeepCollectionEquality()
-                .equals(other._favoriteUrls, _favoriteUrls));
-  }
+/// Create a copy of FavoriteState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$FavoriteSuccessCopyWith<FavoriteSuccess> get copyWith => _$FavoriteSuccessCopyWithImpl<FavoriteSuccess>(this, _$identity);
 
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_favoriteUrls));
 
-  @override
-  String toString() {
-    return 'FavoriteState.success(favoriteUrls: $favoriteUrls)';
-  }
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FavoriteSuccess&&const DeepCollectionEquality().equals(other._favoriteUrls, _favoriteUrls));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_favoriteUrls));
+
+@override
+String toString() {
+  return 'FavoriteState.success(favoriteUrls: $favoriteUrls)';
+}
+
+
 }
 
 /// @nodoc
-abstract mixin class $FavoriteSuccessCopyWith<$Res>
-    implements $FavoriteStateCopyWith<$Res> {
-  factory $FavoriteSuccessCopyWith(
-          FavoriteSuccess value, $Res Function(FavoriteSuccess) _then) =
-      _$FavoriteSuccessCopyWithImpl;
-  @useResult
-  $Res call({List<String> favoriteUrls});
-}
+abstract mixin class $FavoriteSuccessCopyWith<$Res> implements $FavoriteStateCopyWith<$Res> {
+  factory $FavoriteSuccessCopyWith(FavoriteSuccess value, $Res Function(FavoriteSuccess) _then) = _$FavoriteSuccessCopyWithImpl;
+@useResult
+$Res call({
+ List<String> favoriteUrls
+});
 
+
+
+
+}
 /// @nodoc
 class _$FavoriteSuccessCopyWithImpl<$Res>
     implements $FavoriteSuccessCopyWith<$Res> {
@@ -338,62 +307,64 @@ class _$FavoriteSuccessCopyWithImpl<$Res>
   final FavoriteSuccess _self;
   final $Res Function(FavoriteSuccess) _then;
 
-  /// Create a copy of FavoriteState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? favoriteUrls = null,
-  }) {
-    return _then(FavoriteSuccess(
-      favoriteUrls: null == favoriteUrls
-          ? _self._favoriteUrls
-          : favoriteUrls // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-    ));
-  }
+/// Create a copy of FavoriteState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? favoriteUrls = null,}) {
+  return _then(FavoriteSuccess(
+favoriteUrls: null == favoriteUrls ? _self._favoriteUrls : favoriteUrls // ignore: cast_nullable_to_non_nullable
+as List<String>,
+  ));
+}
+
+
 }
 
 /// @nodoc
+
 
 class FavoriteError implements FavoriteState {
   const FavoriteError(this.message);
+  
 
-  final String message;
+ final  String message;
 
-  /// Create a copy of FavoriteState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  $FavoriteErrorCopyWith<FavoriteError> get copyWith =>
-      _$FavoriteErrorCopyWithImpl<FavoriteError>(this, _$identity);
+/// Create a copy of FavoriteState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$FavoriteErrorCopyWith<FavoriteError> get copyWith => _$FavoriteErrorCopyWithImpl<FavoriteError>(this, _$identity);
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is FavoriteError &&
-            (identical(other.message, message) || other.message == message));
-  }
 
-  @override
-  int get hashCode => Object.hash(runtimeType, message);
 
-  @override
-  String toString() {
-    return 'FavoriteState.error(message: $message)';
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FavoriteError&&(identical(other.message, message) || other.message == message));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,message);
+
+@override
+String toString() {
+  return 'FavoriteState.error(message: $message)';
+}
+
+
 }
 
 /// @nodoc
-abstract mixin class $FavoriteErrorCopyWith<$Res>
-    implements $FavoriteStateCopyWith<$Res> {
-  factory $FavoriteErrorCopyWith(
-          FavoriteError value, $Res Function(FavoriteError) _then) =
-      _$FavoriteErrorCopyWithImpl;
-  @useResult
-  $Res call({String message});
-}
+abstract mixin class $FavoriteErrorCopyWith<$Res> implements $FavoriteStateCopyWith<$Res> {
+  factory $FavoriteErrorCopyWith(FavoriteError value, $Res Function(FavoriteError) _then) = _$FavoriteErrorCopyWithImpl;
+@useResult
+$Res call({
+ String message
+});
 
+
+
+
+}
 /// @nodoc
 class _$FavoriteErrorCopyWithImpl<$Res>
     implements $FavoriteErrorCopyWith<$Res> {
@@ -402,19 +373,16 @@ class _$FavoriteErrorCopyWithImpl<$Res>
   final FavoriteError _self;
   final $Res Function(FavoriteError) _then;
 
-  /// Create a copy of FavoriteState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? message = null,
-  }) {
-    return _then(FavoriteError(
-      null == message
-          ? _self.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
+/// Create a copy of FavoriteState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
+  return _then(FavoriteError(
+null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
 }
 
 // dart format on

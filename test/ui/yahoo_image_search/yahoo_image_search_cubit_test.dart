@@ -42,10 +42,11 @@ void main() {
 
     // CubitにHttpClientを注入できるように改造している前提
     cubit = YahooImageSearchCubit(
-        mockRepository,
-        mockGallery,
-        httpClient: mockClient,
-        mockFavoriteRepository);
+      mockRepository,
+      mockGallery,
+      mockFavoriteRepository,
+      mockClient,
+    );
   });
 
   // これを追加！
@@ -63,12 +64,13 @@ void main() {
   group('YahooImageSearchCubit', () {
     test('初期状態が正しいこと', () {
       expect(
-          cubit.state,
-          const YahooImageSearchState(
-            // 初期状態：Screenはinitial、Dialogはidle
-            screen: ScreenState.initial(''),
-            dialog: DialogState.idle(),
-          ));
+        cubit.state,
+        const YahooImageSearchState(
+          // 初期状態：Screenはinitial、Dialogはidle
+          screen: ScreenState.initial(''),
+          dialog: DialogState.idle(),
+        ),
+      );
     });
 
     blocTest<YahooImageSearchCubit, YahooImageSearchState>(
@@ -77,7 +79,9 @@ void main() {
       act: (cubit) => cubit.setSearchWord('ねこ'),
       expect: () => [
         const YahooImageSearchState(
-            screen: ScreenState.initial('ねこ'), dialog: DialogState.idle()),
+          screen: ScreenState.initial('ねこ'),
+          dialog: DialogState.idle(),
+        ),
       ],
     );
 
@@ -85,9 +89,9 @@ void main() {
       '検索成功時：Loading状態を経て、結果が格納されること',
       build: () {
         // リポジトリが結果を返すように設定
-        when(() => mockRepository.fetchImages(searchWord: 'Flutter'))
-            .thenAnswer(
-                (_) async => [ImageResult(url: 'https://test.com/1.jpg')]);
+        when(
+          () => mockRepository.fetchImages(searchWord: 'Flutter'),
+        ).thenAnswer((_) async => [ImageResult(url: 'https://test.com/1.jpg')]);
         return cubit;
       },
       act: (cubit) async {
@@ -97,18 +101,23 @@ void main() {
       // 状態の遷移を順番に検証
       expect: () => [
         const YahooImageSearchState(
-            screen: ScreenState.initial('Flutter'), dialog: DialogState.idle()),
+          screen: ScreenState.initial('Flutter'),
+          dialog: DialogState.idle(),
+        ),
         // 文字入力
         const YahooImageSearchState(
-            screen: ScreenState.loading('Flutter'), dialog: DialogState.idle()),
+          screen: ScreenState.loading('Flutter'),
+          dialog: DialogState.idle(),
+        ),
         //const YahooImageSearchState.loading(SearchContext(word: 'Flutter')),
         // 検索開始（Loadingに遷移）
         YahooImageSearchState(
-            screen: ScreenState.success(
-              results: [ImageResult(url: 'https://test.com/1.jpg')],
-              word: 'Flutter',
-            ),
-            dialog: const DialogState.idle()),
+          screen: ScreenState.success(
+            results: [ImageResult(url: 'https://test.com/1.jpg')],
+            word: 'Flutter',
+          ),
+          dialog: const DialogState.idle(),
+        ),
         // 成功
       ],
     );
@@ -118,11 +127,14 @@ void main() {
       build: () {
         // 1. 最初に1ページ目の成功状態をモックにセットしておく必要があるため、
         // 念のため repository の挙動を定義
-        when(() => mockRepository.fetchImages(searchWord: "こねこ", page: 2))
-            .thenAnswer((_) async => [
-                  ImageResult(url: 'https://test.com/3.jpg'),
-                  ImageResult(url: 'https://test.com/4.jpg')
-                ]); // 2ページ目の結果
+        when(
+          () => mockRepository.fetchImages(searchWord: "こねこ", page: 2),
+        ).thenAnswer(
+          (_) async => [
+            ImageResult(url: 'https://test.com/3.jpg'),
+            ImageResult(url: 'https://test.com/4.jpg'),
+          ],
+        ); // 2ページ目の結果
 
         return cubit;
       },
@@ -132,7 +144,7 @@ void main() {
         screen: ScreenState.success(
           results: [
             ImageResult(url: 'https://test.com/1.jpg'),
-            ImageResult(url: 'https://test.com/2.jpg')
+            ImageResult(url: 'https://test.com/2.jpg'),
           ], // 1ページ目の結果
           word: 'こねこ',
           hasNext: true,
@@ -144,10 +156,13 @@ void main() {
         isA<YahooImageSearchState>().having(
           (s) => s.screen,
           'screen is loadingMore',
-          ScreenState.loadingMore(results: [
-            ImageResult(url: 'https://test.com/1.jpg'),
-            ImageResult(url: 'https://test.com/2.jpg')
-          ], word: 'こねこ'),
+          ScreenState.loadingMore(
+            results: [
+              ImageResult(url: 'https://test.com/1.jpg'),
+              ImageResult(url: 'https://test.com/2.jpg'),
+            ],
+            word: 'こねこ',
+          ),
         ),
         // 2. 次に success 状態になり、リストが合体し、page が 2 になる
         isA<YahooImageSearchState>()
@@ -160,7 +175,7 @@ void main() {
                   ImageResult(url: 'https://test.com/1.jpg'),
                   ImageResult(url: 'https://test.com/2.jpg'),
                   ImageResult(url: 'https://test.com/3.jpg'),
-                  ImageResult(url: 'https://test.com/4.jpg')
+                  ImageResult(url: 'https://test.com/4.jpg'),
                 ], // リストが合体！
                 word: 'こねこ',
                 hasNext: true,
@@ -169,16 +184,18 @@ void main() {
       ],
       verify: (_) {
         // ちゃんと page: 2 で repository が呼ばれたか確認
-        verify(() => mockRepository.fetchImages(searchWord: 'こねこ', page: 2))
-            .called(1);
+        verify(
+          () => mockRepository.fetchImages(searchWord: 'こねこ', page: 2),
+        ).called(1);
       },
     );
 
     blocTest<YahooImageSearchCubit, YahooImageSearchState>(
       '検索失敗時：Loading状態を経て、エラーメッセージが格納されること',
       build: () {
-        when(() => mockRepository.fetchImages(searchWord: 'ErrorWord'))
-            .thenThrow(Exception('Network Error'));
+        when(
+          () => mockRepository.fetchImages(searchWord: 'ErrorWord'),
+        ).thenThrow(Exception('Network Error'));
         return cubit;
       },
       act: (cubit) async {
@@ -187,15 +204,20 @@ void main() {
       },
       expect: () => [
         const YahooImageSearchState(
-            screen: ScreenState.initial('ErrorWord'),
-            dialog: DialogState.idle()),
+          screen: ScreenState.initial('ErrorWord'),
+          dialog: DialogState.idle(),
+        ),
         const YahooImageSearchState(
-            screen: ScreenState.loading('ErrorWord'),
-            dialog: DialogState.idle()),
+          screen: ScreenState.loading('ErrorWord'),
+          dialog: DialogState.idle(),
+        ),
         const YahooImageSearchState(
-            screen: ScreenError(
-                message: 'Exception: Network Error', word: 'ErrorWord'),
-            dialog: DialogState.idle())
+          screen: ScreenError(
+            message: 'Exception: Network Error',
+            word: 'ErrorWord',
+          ),
+          dialog: DialogState.idle(),
+        ),
       ],
     );
 
@@ -208,7 +230,9 @@ void main() {
       },
       expect: () => [
         const YahooImageSearchState(
-            screen: ScreenState.initial('ab'), dialog: DialogState.idle())
+          screen: ScreenState.initial('ab'),
+          dialog: DialogState.idle(),
+        ),
         // searchを呼んでも Loading 状態は emit されない
       ],
       verify: (_) {
@@ -222,9 +246,9 @@ void main() {
     '画像ダウンロード成功時：DialogStateが loading -> success -> idle と遷移すること',
     build: () {
       // http.get の挙動をモック
-      when(() => mockClient.get(any())).thenAnswer(
-        (_) async => http.Response('fake_bytes', 200),
-      );
+      when(
+        () => mockClient.get(any()),
+      ).thenAnswer((_) async => http.Response('fake_bytes', 200));
       // 保存処理のモック（なにもせず成功させる）
       when(() => mockGallery.save(any())).thenAnswer((_) async => {});
       return cubit;
@@ -237,14 +261,23 @@ void main() {
     act: (cubit) => cubit.downloadImage('https://test.com/image.jpg'),
     expect: () => [
       // 1. ダイアログだけ Loading になる（screenの状態は引き継がれる）
-      isA<YahooImageSearchState>()
-          .having((s) => s.dialog, 'dialog', const DialogState.loading()),
+      isA<YahooImageSearchState>().having(
+        (s) => s.dialog,
+        'dialog',
+        const DialogState.loading(),
+      ),
       // 2. 成功状態になる
-      isA<YahooImageSearchState>().having((s) => s.dialog, 'dialog',
-          const DialogState.success('ギャラリーに保存しました！')),
+      isA<YahooImageSearchState>().having(
+        (s) => s.dialog,
+        'dialog',
+        const DialogState.success('ギャラリーに保存しました！'),
+      ),
       // 3. 最後に Idle に戻る
-      isA<YahooImageSearchState>()
-          .having((s) => s.dialog, 'dialog', const DialogState.idle()),
+      isA<YahooImageSearchState>().having(
+        (s) => s.dialog,
+        'dialog',
+        const DialogState.idle(),
+      ),
     ],
   );
 
@@ -253,22 +286,32 @@ void main() {
       '画像保存に成功した場合、DialogStateが loading -> success -> idle と遷移すること',
       build: () {
         // このテストに関係するスタブだけを個別に定義
-        when(() => mockClient.get(any()))
-            .thenAnswer((_) async => http.Response('dummy_bytes', 200));
+        when(
+          () => mockClient.get(any()),
+        ).thenAnswer((_) async => http.Response('dummy_bytes', 200));
         when(() => mockGallery.save(any())).thenAnswer((_) async => {});
         return cubit;
       },
       act: (cubit) => cubit.downloadImage('https://example.com/test.jpg'),
       expect: () => [
         // 1. ローディング開始
-        isA<YahooImageSearchState>()
-            .having((s) => s.dialog, 'loading', const DialogState.loading()),
+        isA<YahooImageSearchState>().having(
+          (s) => s.dialog,
+          'loading',
+          const DialogState.loading(),
+        ),
         // 2. 成功メッセージ表示
-        isA<YahooImageSearchState>().having((s) => s.dialog, 'success',
-            const DialogState.success('ギャラリーに保存しました！')),
+        isA<YahooImageSearchState>().having(
+          (s) => s.dialog,
+          'success',
+          const DialogState.success('ギャラリーに保存しました！'),
+        ),
         // 3. アイドル状態に戻る
-        isA<YahooImageSearchState>()
-            .having((s) => s.dialog, 'idle', const DialogState.idle()),
+        isA<YahooImageSearchState>().having(
+          (s) => s.dialog,
+          'idle',
+          const DialogState.idle(),
+        ),
       ],
       verify: (_) {
         // 内部で正しく呼ばれたか検証

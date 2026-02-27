@@ -12,18 +12,22 @@ part of 'network_activity_notifier.dart';
 @ProviderFor(NetworkActivityNotifier)
 final networkActivityProvider = NetworkActivityNotifierProvider._();
 
-final class NetworkActivityNotifierProvider extends $AsyncNotifierProvider<
-    NetworkActivityNotifier, List<ConnectivityResult>> {
+final class NetworkActivityNotifierProvider
+    extends
+        $AsyncNotifierProvider<
+          NetworkActivityNotifier,
+          List<ConnectivityResult>
+        > {
   NetworkActivityNotifierProvider._()
-      : super(
-          from: null,
-          argument: null,
-          retry: null,
-          name: r'networkActivityProvider',
-          isAutoDispose: false,
-          dependencies: null,
-          $allTransitiveDependencies: null,
-        );
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'networkActivityProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
 
   @override
   String debugGetCreateSourceHash() => _$networkActivityNotifierHash();
@@ -42,14 +46,23 @@ abstract class _$NetworkActivityNotifier
   @$mustCallSuper
   @override
   void runBuild() {
-    final ref = this.ref
-        as $Ref<AsyncValue<List<ConnectivityResult>>, List<ConnectivityResult>>;
-    final element = ref.element as $ClassProviderElement<
-        AnyNotifier<AsyncValue<List<ConnectivityResult>>,
-            List<ConnectivityResult>>,
-        AsyncValue<List<ConnectivityResult>>,
-        Object?,
-        Object?>;
+    final ref =
+        this.ref
+            as $Ref<
+              AsyncValue<List<ConnectivityResult>>,
+              List<ConnectivityResult>
+            >;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<
+                AsyncValue<List<ConnectivityResult>>,
+                List<ConnectivityResult>
+              >,
+              AsyncValue<List<ConnectivityResult>>,
+              Object?,
+              Object?
+            >;
     element.handleCreate(ref, build);
   }
 }

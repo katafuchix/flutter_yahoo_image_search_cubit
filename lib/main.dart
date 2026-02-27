@@ -1,5 +1,4 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -8,42 +7,21 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
 import 'core/router.dart';
 
-//import 'network/network_activity_notifier.dart';
-import 'package:flutter_yahoo_image_search_cubit/network/network_activity_notifier.dart';
-import 'repository/favorite_repository_impl.dart';
-import 'repository/image_repository_impl.dart';
-import 'service/gallery_service.dart';
+import 'network/network_activity_notifier.dart';
 import 'ui/favorite/favorite_cubit.dart';
 import 'ui/yahoo_image_search/yahoo_image_search_cubit.dart';
+import 'injection.dart';
 
-void main() {
-  // 1. Dioのインスタンスを1つだけ作る（Swiftの URLSession.shared 的な扱い）
-  // ここでタイムアウトやベースURLを一括管理できる
-  final dio = Dio(BaseOptions(
-    connectTimeout: const Duration(seconds: 10),
-    receiveTimeout: const Duration(seconds: 10),
-  ));
-
-  // 2. 作った dio をリポジトリに注入する（Dependency Injection）
-  final imageRepo = ImageRepositoryImpl(dio);
-  final favoriteRepo = FavoriteRepositoryImpl();
-  final galleryService = GalleryService();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await configureDependencies();
 
   runApp(
     MultiBlocProvider(
       providers: [
-        // アプリ全体で共有するお気に入り管理
-        BlocProvider(
-          create: (_) => FavoriteCubit(favoriteRepo)..load(),
-        ),
-        // 検索画面用のCubit（必要なリポジトリをすべて渡す）
-        BlocProvider(
-          create: (_) => YahooImageSearchCubit(
-            imageRepo,
-            galleryService,
-            favoriteRepo,
-          ),
-        ),
+        // 引数のリポジトリ類は locator が内部で自動的に組み立てて提供します
+        BlocProvider(create: (_) => locator<FavoriteCubit>()..load()),
+        BlocProvider(create: (_) => locator<YahooImageSearchCubit>()),
       ],
       child: const MyApp(),
     ),
@@ -66,9 +44,7 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: const [
-        Locale('ja'),
-      ],
+      supportedLocales: const [Locale('ja')],
       theme: ThemeData(
         colorScheme: const ColorScheme.light(
           primary: Colors.grey,
@@ -105,19 +81,19 @@ class _AppWrapperState extends ConsumerState<_AppWrapper> {
 
     ref.watch(networkActivityProvider);
 
-    ref.listen<AsyncValue<List<ConnectivityResult>>>(
-      networkActivityProvider,
-      (previous, next) {
-        final notifier = ref.read(networkActivityProvider.notifier);
+    ref.listen<AsyncValue<List<ConnectivityResult>>>(networkActivityProvider, (
+      previous,
+      next,
+    ) {
+      final notifier = ref.read(networkActivityProvider.notifier);
 
-        if (notifier.isOffline) {
-          GlobalSnackBar.show('オフラインです');
-        } else if (notifier.isOnline &&
-            previous?.value?.contains(ConnectivityResult.none) == true) {
-          GlobalSnackBar.show('オンラインに復帰しました');
-        }
-      },
-    );
+      if (notifier.isOffline) {
+        GlobalSnackBar.show('オフラインです');
+      } else if (notifier.isOnline &&
+          previous?.value?.contains(ConnectivityResult.none) == true) {
+        GlobalSnackBar.show('オンラインに復帰しました');
+      }
+    });
 
     return widget.child; // 画面はそのまま
   }
@@ -203,9 +179,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
+            const Text('You have pushed the button this many times:'),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,

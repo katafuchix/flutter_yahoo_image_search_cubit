@@ -9,29 +9,13 @@ part 'yahoo_image_search_state.freezed.dart';
 // Union形式（Sealed Class）
 
 @freezed
-class YahooImageSearchState with _$YahooImageSearchState {
+abstract class YahooImageSearchState with _$YahooImageSearchState {
   const factory YahooImageSearchState({
     @Default(ScreenState.initial('')) ScreenState screen,
     @Default(DialogState.idle()) DialogState dialog,
     @Default([]) List<String> favoriteUrls,
     @Default(1) int currentPage,
   }) = _YahooImageSearchState;
-
-  @override
-  // TODO: implement currentPage
-  int get currentPage => throw UnimplementedError();
-
-  @override
-  // TODO: implement dialog
-  DialogState get dialog => throw UnimplementedError();
-
-  @override
-  // TODO: implement favoriteUrls
-  List<String> get favoriteUrls => throw UnimplementedError();
-
-  @override
-  // TODO: implement screen
-  ScreenState get screen => throw UnimplementedError();
 }
 
 @freezed

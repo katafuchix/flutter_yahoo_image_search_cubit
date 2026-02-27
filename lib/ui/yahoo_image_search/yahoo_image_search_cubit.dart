@@ -1,10 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
+import 'package:injectable/injectable.dart';
 import '../../../repository/image_repository.dart';
 import '../../../repository/favorite_repository.dart';
 import 'yahoo_image_search_state.dart';
 import '../../../service/gallery_service.dart';
 
+@injectable
 class YahooImageSearchCubit extends Cubit<YahooImageSearchState> {
   final ImageRepository _repository;
   final GalleryService _galleryService;
@@ -15,15 +17,15 @@ class YahooImageSearchCubit extends Cubit<YahooImageSearchState> {
   YahooImageSearchCubit(
     this._repository,
     this._galleryService,
-    this._favoriteRepository, {
-    http.Client? httpClient,
-  } // テスト用に任意で受け取れるようにする
-      )  : _httpClient = httpClient ?? http.Client(),
-        super(const YahooImageSearchState(
+    this._favoriteRepository,
+    this._httpClient, // 必須にする
+  ) : super(
+        const YahooImageSearchState(
           // 初期状態：Screenはinitial、Dialogはidle
           screen: ScreenState.initial(''),
           dialog: DialogState.idle(),
-        ));
+        ),
+      );
 
   // ボタンの判定もStateから取れる
   bool get isSearchButtonEnabled => state.screen.word.length >= 3;
@@ -31,9 +33,7 @@ class YahooImageSearchCubit extends Cubit<YahooImageSearchState> {
   void setSearchWord(String word) {
     // 現在の screen 状態を維持したまま word だけ更新
     // state.screen.copyWith(word: word) が使えるよう定義されている想定
-    emit(state.copyWith(
-      screen: state.screen.copyWith(word: word),
-    ));
+    emit(state.copyWith(screen: state.screen.copyWith(word: word)));
   }
 
   // 検索実行
@@ -44,28 +44,36 @@ class YahooImageSearchCubit extends Cubit<YahooImageSearchState> {
 
     // Loading状態へ（検索ワードを引き継ぐ）
     // 画面（screen）だけをロード中に変更
-    emit(state.copyWith(
-        currentPage: 1, screen: ScreenState.loading(currentWord)));
+    emit(
+      state.copyWith(currentPage: 1, screen: ScreenState.loading(currentWord)),
+    );
 
     try {
-      final results = await _repository.fetchImages(
-        searchWord: currentWord,
-      );
+      final results = await _repository.fetchImages(searchWord: currentWord);
 
       if (results.isEmpty) {
-        emit(state.copyWith(
-          screen: ScreenState.error(message: '結果なし', word: currentWord),
-        ));
+        emit(
+          state.copyWith(
+            screen: ScreenState.error(message: '結果なし', word: currentWord),
+          ),
+        );
       } else {
-        emit(state.copyWith(
-          screen: ScreenState.success(
-              results: results, word: currentWord, hasNext: results.isNotEmpty),
-        ));
+        emit(
+          state.copyWith(
+            screen: ScreenState.success(
+              results: results,
+              word: currentWord,
+              hasNext: results.isNotEmpty,
+            ),
+          ),
+        );
       }
     } catch (e) {
-      emit(state.copyWith(
-        screen: ScreenState.error(message: e.toString(), word: currentWord),
-      ));
+      emit(
+        state.copyWith(
+          screen: ScreenState.error(message: e.toString(), word: currentWord),
+        ),
+      );
     }
   }
 
@@ -79,35 +87,51 @@ class YahooImageSearchCubit extends Cubit<YahooImageSearchState> {
     final _currentWord = currentScreen.word;
 
     // 状態を「次ページ読み込み中」に変更（今あるリストを保持したまま）
-    emit(state.copyWith(
-      screen:
-          ScreenState.loadingMore(results: previousResults, word: _currentWord),
-    ));
+    emit(
+      state.copyWith(
+        screen: ScreenState.loadingMore(
+          results: previousResults,
+          word: _currentWord,
+        ),
+      ),
+    );
 
     try {
       final nextPage = state.currentPage + 1; // 状態から計算
       final newResults = await _repository.fetchImages(
-          searchWord: _currentWord, page: nextPage);
+        searchWord: _currentWord,
+        page: nextPage,
+      );
 
-      emit(state.copyWith(
-        currentPage: nextPage, // 成功したらページを更新
-        screen: ScreenState.success(
-          results: [...previousResults, ...newResults], // Swiftの array + array
-          word: _currentWord,
-          hasNext: newResults.isNotEmpty, // 取得件数が空なら次はなし
+      emit(
+        state.copyWith(
+          currentPage: nextPage, // 成功したらページを更新
+          screen: ScreenState.success(
+            results: [
+              ...previousResults,
+              ...newResults,
+            ], // Swiftの array + array
+            word: _currentWord,
+            hasNext: newResults.isNotEmpty, // 取得件数が空なら次はなし
+          ),
         ),
-      ));
+      );
     } catch (e) {
       // エラーでも前のリストは消さずにSuccessに戻す（またはエラー通知）
-      emit(state.copyWith(
+      emit(
+        state.copyWith(
           screen: ScreenState.success(
-              results: previousResults, word: _currentWord)));
+            results: previousResults,
+            word: _currentWord,
+          ),
+        ),
+      );
     }
   }
 
   // 画像保存処理
   Future<void> downloadImage(String url) async {
-// 1. ダイアログの状態をロード中に（画面のリストは維持）
+    // 1. ダイアログの状態をロード中に（画面のリストは維持）
     emit(state.copyWith(dialog: const DialogState.loading()));
 
     try {
@@ -136,7 +160,7 @@ class YahooImageSearchCubit extends Cubit<YahooImageSearchState> {
     }
   }
 
-// お気に入り操作（リポジトリを叩くだけ。状態の更新は FavoriteCubit が担当する）
+  // お気に入り操作（リポジトリを叩くだけ。状態の更新は FavoriteCubit が担当する）
   Future<void> toggleFavorite(String url) async {
     try {
       await _favoriteRepository.toggleFavorite(url);

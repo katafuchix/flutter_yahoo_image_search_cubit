@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.5.3
+  sdk: ^3.11.0
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -64,6 +64,8 @@ dependencies:
   go_router: ^17.1.0 # 最新バージョンを確認してください
   cached_network_image: ^3.4.1
   gal: ^2.3.2
+  get_it: ^9.2.1
+  injectable: ^2.5.0
 
 dev_dependencies:
   flutter_test:
@@ -79,6 +81,7 @@ dev_dependencies:
   lint_staged: ^0.5.1
   riverpod_generator: ^4.0.0+1
   build_runner: ^2.4.9
+  injectable_generator: ^2.6.2
   custom_lint: ^0.8.1
   riverpod_lint: ^3.1.0
   freezed: ^3.2.3
