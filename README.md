@@ -16,3 +16,9 @@
   &nbsp;
 <img width="200" alt="Image" src="https://github.com/user-attachments/assets/298f05c9-fd98-456d-8cfa-90cc3292c174" />
 </div>
+
+```
+% flutter pub run build_runner build --delete-conflicting-outputs
+
+% flutter test test/ui/yahoo_image_search/yahoo_image_search_cubit_test.dart
+```
